@@ -12,8 +12,8 @@ export const PRODUCTS: Product[] = [
     color: "Carbon Obsidian",
     colorHex: "#121212",
     images: [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/deconstructed-oversized-wool-blazer/look-1.png",
+      "/images/products/deconstructed-oversized-wool-blazer/look-2.png",
     ],
     description:
       "Crafted with an unstructured floating canvas and exaggerated broad shoulders, this blazer redefines modern formalwear for 2026. Tailored in Biella from 380 GSM virgin Italian wool with raw-edge lapel detailing and horn buttons.",
@@ -58,8 +58,8 @@ export const PRODUCTS: Product[] = [
     color: "Chalk Off-White",
     colorHex: "#F2F2EF",
     images: [
-      "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/asymmetric-draped-silk-blouse/look-1.png",
+      "/images/products/asymmetric-draped-silk-blouse/look-2.png",
     ],
     description:
       "Cut on the bias from heavyweight 22mm sandwashed mulberry silk, featuring a sculpted diagonal collar and an undulating side drape that responds dynamically to bodily movement.",
@@ -103,8 +103,8 @@ export const PRODUCTS: Product[] = [
     color: "Ash Concrete",
     colorHex: "#707376",
     images: [
-      "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1508427953056-b00b8d78ebf5?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/pleated-architectural-trousers/look-1.png",
+      "/images/products/pleated-architectural-trousers/look-2.png",
     ],
     description:
       "Engineered with deep inverted twin pleats and a structured wide-leg stance. Built from high-twist tropical wool that resists creasing while establishing a razor-sharp vertical silhouette.",
@@ -148,8 +148,8 @@ export const PRODUCTS: Product[] = [
     color: "Pure Obsidian",
     colorHex: "#151515",
     images: [
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/sculpted-mock-neck-knit/look-1.png",
+      "/images/products/sculpted-mock-neck-knit/look-2.png",
     ],
     description:
       "A second-skin mock neck spun from fine-gauge ribbed organic modal and silk. Engineered compression panels contour gently along the torso, creating an ultra-clean foundation under structured tailoring.",
@@ -193,8 +193,8 @@ export const PRODUCTS: Product[] = [
     color: "Heather Oatmeal",
     colorHex: "#C9BFB5",
     images: [
-      "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/boxy-brushed-mohair-cardigan/look-1.png",
+      "/images/products/boxy-brushed-mohair-cardigan/look-2.png",
     ],
     description:
       "Hand-brushed South African mohair blended with extrafine merino wool. Designed with a boxy, cropped torso, deep V-neckline, and chunky ribbed trims that create a luxurious textural contrast against sleek bottoms.",
@@ -238,8 +238,8 @@ export const PRODUCTS: Product[] = [
     color: "Matte Pitch",
     colorHex: "#0D0D0E",
     images: [
-      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/bonded-lambskin-cropped-biker/look-1.png",
+      "/images/products/bonded-lambskin-cropped-biker/look-2.png",
     ],
     description:
       "Sculpted from supple full-grain lambskin leather bonded to a structured neoprene backing. Minimalist silver hardware, sharp funnel collar, and an architectural cropped hemline inspired by mid-century brutalist sculpture.",
@@ -283,8 +283,8 @@ export const PRODUCTS: Product[] = [
     color: "Optical Chalk",
     colorHex: "#FAF9F6",
     images: [
-      "https://images.unsplash.com/photo-1617137984095-74e4e5e3613f?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/concealed-placket-poplin-shirt/look-1.png",
+      "/images/products/concealed-placket-poplin-shirt/look-2.png",
     ],
     description:
       "A study in clinical minimalism. High-density 120-yarn Egyptian Giza cotton poplin with a hidden fly-front placket, micro-point spread collar, and elongated rear yoke.",
@@ -328,8 +328,8 @@ export const PRODUCTS: Product[] = [
     color: "Bone Chalk",
     colorHex: "#EDECE8",
     images: [
-      "https://images.unsplash.com/photo-1509631179647-0177331693ae?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1485230895905-ec40ba36b9bc?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/high-waist-column-maxi-skirt/look-1.png",
+      "/images/products/high-waist-column-maxi-skirt/look-2.png",
     ],
     description:
       "An austere, floor-sweeping column skirt engineered from double-faced compact wool crepe. High-rise waistband with internal grosgrain stay and a deep rear vent for unhindered strides.",
@@ -373,8 +373,8 @@ export const PRODUCTS: Product[] = [
     color: "Slate Melange",
     colorHex: "#5B5F63",
     images: [
-      "https://images.unsplash.com/photo-1508427953056-b00b8d78ebf5?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/relaxed-studio-drawstring-pant/look-1.png",
+      "/images/products/relaxed-studio-drawstring-pant/look-2.png",
     ],
     description:
       "Merging loungewear ease with bespoke tailoring. Heavyweight Japanese cotton-tencel twill featuring an encased tubular drawstring, deep slash pockets, and a fluid wide-straight drape.",
@@ -418,8 +418,8 @@ export const PRODUCTS: Product[] = [
     color: "Washed Dune",
     colorHex: "#B8ADA0",
     images: [
-      "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/minimalist-double-breasted-trench/look-1.png",
+      "/images/products/minimalist-double-breasted-trench/look-2.png",
     ],
     description:
       "A modern reinterpretation of the iconic trench coat stripped of epaulets and clutter. Cut from water-repellent bonded cotton gabardine with an architectural storm flap and oversized storm collar.",
@@ -463,8 +463,8 @@ export const PRODUCTS: Product[] = [
     color: "Deep Ash",
     colorHex: "#35383B",
     images: [
-      "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1552374196-1ab2a1c593e8?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/fine-gauge-merino-cocoon-knit/look-1.png",
+      "/images/products/fine-gauge-merino-cocoon-knit/look-2.png",
     ],
     description:
       "16-gauge superfine merino wool spun to an ultra-soft handle. High sculptural turtleneck collar with engineered drop-needle ribbed panels across the upper back and forearm.",
@@ -508,8 +508,8 @@ export const PRODUCTS: Product[] = [
     color: "Pitch Obsidian",
     colorHex: "#111111",
     images: [
-      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=85",
+      "/images/products/architectural-tailored-evening-mini/look-1.png",
+      "/images/products/architectural-tailored-evening-mini/look-2.png",
     ],
     description:
       "A tailored tuxedo dress hybrid featuring an asymmetric peak lapel, sharp padded shoulders, and a clean wrap closure secured by internal horn buttons.",
