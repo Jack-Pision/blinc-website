@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
+import { CapsuleMixer } from "@/components/CapsuleMixer";
 import { ArrowRight } from "lucide-react";
 
 type GenderFilter = "all" | "female" | "male" | "unisex";
@@ -150,6 +151,11 @@ export default function HomePage() {
             <ArrowRight className="w-3.5 h-3.5" />
           </Link>
         </div>
+      </section>
+
+      {/* 2.5 CAPSULE MIXER & SILHOUETTE LAB */}
+      <section id="capsule-mixer" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-[#e5e5ea]">
+        <CapsuleMixer />
       </section>
 
       {/* 3. MATERIALS SECTION */}

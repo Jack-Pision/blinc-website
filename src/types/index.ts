@@ -9,6 +9,18 @@ export type ProductCategory =
 
 export type GenderCategory = "all" | "female" | "male" | "unisex";
 
+export interface TactileProfile {
+  drape: number; // 1 (Rigid/Sculptural) to 5 (Ultra-Fluid)
+  drapeLabel: string;
+  weight: number; // 1 (Airy) to 5 (Heavyweight)
+  weightLabel: string;
+  finish: number; // 1 (Chalk Matte) to 5 (Satin Luster)
+  finishLabel: string;
+  thermal: number; // 1 (Transitional/Breezy) to 5 (Sub-Zero Warmth)
+  thermalLabel: string;
+  textureNote: string;
+}
+
 export interface Product {
   id: string;
   slug: string;
@@ -33,6 +45,7 @@ export interface Product {
     origin: string;
     silhouette: string;
   };
+  tactile?: TactileProfile;
 }
 
 export interface CartItem {

@@ -6,11 +6,14 @@ import Link from "next/link";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { ProductCard } from "@/components/ProductCard";
+import { TactileLoupe } from "@/components/TactileLoupe";
+import { TactileSensoryMeter } from "@/components/TactileSensoryMeter";
 import {
   Check,
   ChevronDown,
   ShieldCheck,
   Truck,
+  Sparkles,
 } from "lucide-react";
 
 interface ProductDetailViewProps {
@@ -32,8 +35,10 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
   const handleAddToCart = () => {
     addItem(product, selectedSize);
     setAdded(true);
-    setTimeout(() => setAdded(false), 1200);
+    setTimeout(() => setAdded(false), 1500);
   };
+
+  const activeImage = product.images[selectedImageIndex] || product.images[0];
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14 text-[#1d1d1f]">
@@ -52,32 +57,26 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
 
       {/* Main Product Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-        {/* Left Column: Multi-Angle Gallery */}
-        <div className="lg:col-span-7 space-y-4">
-          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-[#f5f5f7] shadow-xs">
-            <Image
-              src={product.images[selectedImageIndex] || product.images[0]}
-              alt={product.name}
-              fill
-              priority
-              className="object-cover object-top"
-            />
-            <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md text-[#1d1d1f] text-xs font-medium px-3 py-1 rounded-full shadow-2xs">
-              {product.edition}
-            </div>
-          </div>
+        {/* Left Column: Multi-Angle Gallery & Tactile Loupe */}
+        <div className="lg:col-span-7 space-y-6">
+          {/* Interactive Tactile Loupe */}
+          <TactileLoupe
+            src={activeImage}
+            alt={product.name}
+            priority
+          />
 
           {/* Thumbnails */}
           {product.images.length > 1 && (
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 pt-2">
               {product.images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative w-20 h-24 rounded-xl overflow-hidden bg-[#f5f5f7] transition-all ${
+                  className={`relative w-20 h-24 rounded-2xl overflow-hidden bg-[#f5f5f7] transition-all border ${
                     selectedImageIndex === idx
-                      ? "ring-2 ring-[#1d1d1f]"
-                      : "opacity-60 hover:opacity-100"
+                      ? "ring-2 ring-[#1d1d1f] border-transparent"
+                      : "border-[#e5e5ea] opacity-60 hover:opacity-100"
                   }`}
                 >
                   <Image
@@ -90,14 +89,24 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
               ))}
             </div>
           )}
+
+          {/* Tactile Sensory Meter embedded in left column on desktop */}
+          <div className="pt-6 hidden lg:block">
+            <TactileSensoryMeter tactile={product.tactile} />
+          </div>
         </div>
 
         {/* Right Column: Sticky Product Info */}
         <div className="lg:col-span-5 lg:sticky lg:top-20 space-y-6">
           <div>
-            <span className="text-xs font-medium text-[#86868b] block mb-1">
-              {product.gender} · {product.category}
-            </span>
+            <div className="flex items-center justify-between mb-1">
+              <span className="text-xs font-medium text-[#86868b] capitalize">
+                {product.gender} · {product.category}
+              </span>
+              <span className="text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 py-0.5 rounded-full border border-[#e5e5ea]">
+                {product.edition}
+              </span>
+            </div>
 
             <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
               {product.name}
@@ -122,16 +131,16 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
                 style={{ backgroundColor: product.colorHex }}
                 title={product.color}
               />
-              <span className="text-xs text-[#86868b]">Natural mineral dyed</span>
+              <span className="text-xs text-[#86868b]">Natural low-impact mineral dye</span>
             </div>
           </div>
 
           {/* Size Selector */}
           <div className="space-y-2 pt-1">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-[#86868b]">Size:</span>
+              <span className="text-[#86868b]">Selected Size: <strong className="text-[#1d1d1f]">{selectedSize}</strong></span>
               <span className="text-[#0071e3] hover:underline cursor-pointer">
-                Size guide
+                Measurement matrix
               </span>
             </div>
 
@@ -140,9 +149,9 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
                 <button
                   key={sz}
                   onClick={() => setSelectedSize(sz)}
-                  className={`py-2 text-xs font-medium rounded-full transition-all border ${
+                  className={`py-2 text-xs font-medium rounded-full transition-all border active:scale-[0.97] ${
                     selectedSize === sz
-                      ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                      ? "bg-[#1d1d1f] text-white border-[#1d1d1f] shadow-xs"
                       : "bg-white text-[#1d1d1f] border-[#d2d2d7] hover:border-black"
                   }`}
                 >
@@ -156,12 +165,12 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
           <div className="pt-2 space-y-3">
             <button
               onClick={handleAddToCart}
-              className="w-full bg-[#1d1d1f] hover:bg-black text-white py-3.5 px-6 rounded-full text-sm font-medium flex items-center justify-center space-x-2 transition-all shadow-sm"
+              className="w-full bg-[#1d1d1f] hover:bg-black text-white py-3.5 px-6 rounded-full text-sm font-medium flex items-center justify-center space-x-2 transition-all shadow-sm active:scale-[0.98]"
             >
               {added ? (
                 <>
                   <Check className="w-4 h-4 text-emerald-400" />
-                  <span>Added to bag</span>
+                  <span>Added to bag · {selectedSize}</span>
                 </>
               ) : (
                 <span>Add to bag — {formatPrice(product.price)}</span>
@@ -171,7 +180,7 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
             <div className="flex items-center justify-center space-x-4 text-xs text-[#86868b] pt-1">
               <span className="flex items-center space-x-1">
                 <Truck className="w-3.5 h-3.5 text-[#86868b]" />
-                <span>Complimentary express shipping</span>
+                <span>Complimentary express delivery</span>
               </span>
               <span>·</span>
               <span className="flex items-center space-x-1">
@@ -183,7 +192,7 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
 
           {/* Technical Specs Card */}
           {product.stats && (
-            <div className="grid grid-cols-3 gap-2 p-3.5 bg-[#f5f5f7] rounded-2xl text-xs">
+            <div className="grid grid-cols-3 gap-2 p-3.5 bg-[#f5f5f7] rounded-2xl text-xs border border-[#e5e5ea]/60">
               <div>
                 <span className="text-[#86868b] block text-[11px]">Weight</span>
                 <span className="font-medium text-[#1d1d1f]">{product.stats.weight}</span>
@@ -198,6 +207,11 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
               </div>
             </div>
           )}
+
+          {/* Mobile Tactile Sensory Meter */}
+          <div className="lg:hidden pt-2">
+            <TactileSensoryMeter tactile={product.tactile} />
+          </div>
 
           {/* Accordion Tabs */}
           <div className="border-t border-[#e5e5ea] pt-3 space-y-2">
@@ -230,7 +244,7 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
                 onClick={() => toggleAccordion("fit")}
                 className="w-full flex justify-between items-center text-xs font-medium text-[#1d1d1f] py-1"
               >
-                <span>Fit & sizing</span>
+                <span>Fit & sizing guidelines</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-[#86868b] transition-transform duration-200 ${
                     openAccordion === "fit" ? "rotate-180" : ""
@@ -249,7 +263,7 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
                 onClick={() => toggleAccordion("sustainability")}
                 className="w-full flex justify-between items-center text-xs font-medium text-[#1d1d1f] py-1"
               >
-                <span>Environmental impact</span>
+                <span>Circularity & provenance</span>
                 <ChevronDown
                   className={`w-3.5 h-3.5 text-[#86868b] transition-transform duration-200 ${
                     openAccordion === "sustainability" ? "rotate-180" : ""
@@ -269,13 +283,22 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
       {/* Complete the Look Section */}
       {pairedProducts.length > 0 && (
         <section className="mt-20 pt-12 border-t border-[#e5e5ea]">
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold tracking-tight text-[#1d1d1f]">
-              Complete the look
-            </h2>
-            <p className="text-xs text-[#86868b] mt-0.5">
-              Pieces designed to pair seamlessly with {product.name}.
-            </p>
+          <div className="mb-6 flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-semibold tracking-tight text-[#1d1d1f]">
+                Complete the look
+              </h2>
+              <p className="text-xs text-[#86868b] mt-0.5">
+                Silhouettes engineered to pair seamlessly with {product.name}.
+              </p>
+            </div>
+            <Link
+              href="/#capsule-mixer"
+              className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>Launch Silhouette Lab</span>
+            </Link>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
