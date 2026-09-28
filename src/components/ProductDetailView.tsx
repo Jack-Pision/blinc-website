@@ -114,21 +114,19 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
             </div>
           </div>
 
-          {/* Material & Color Profile */}
-          <div className="p-4 bg-[#f5f5f7] rounded-2xl border border-[#e5e5ea]/80 space-y-2 text-xs">
-            <div className="flex justify-between items-center">
-              <span className="text-[#86868b]">Textile:</span>
-              <span className="font-medium text-[#1d1d1f]">{product.material}</span>
+          {/* Color Profile */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-[#86868b]">Color:</span>
+              <span className="font-medium text-[#1d1d1f]">{product.color}</span>
             </div>
-            <div className="flex justify-between items-center">
-              <span className="text-[#86868b]">Shade:</span>
-              <div className="flex items-center space-x-2">
-                <span
-                  className="w-3 h-3 rounded-full border border-black/10 inline-block"
-                  style={{ backgroundColor: product.colorHex }}
-                />
-                <span className="font-medium text-[#1d1d1f]">{product.color}</span>
-              </div>
+            <div className="flex items-center space-x-2">
+              <div
+                className="w-4 h-4 rounded-full border border-black/10 shadow-2xs"
+                style={{ backgroundColor: product.colorHex }}
+                title={product.color}
+              />
+              <span className="text-xs text-[#86868b]">Natural low-impact mineral dye</span>
             </div>
           </div>
 
