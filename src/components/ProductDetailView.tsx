@@ -6,13 +6,11 @@ import Link from "next/link";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
 import { ProductCard } from "@/components/ProductCard";
-import { BrutalistAsterisk } from "@/components/BrutalistAsterisk";
 import {
   Check,
-  ArrowRight,
-  ShieldCheck,
   ChevronDown,
-  Sparkles,
+  ShieldCheck,
+  Truck,
 } from "lucide-react";
 
 interface ProductDetailViewProps {
@@ -38,26 +36,25 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-14">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14 text-[#1d1d1f]">
       {/* Breadcrumb path */}
-      <div className="flex items-center space-x-2 text-[10px] font-mono text-neutral-400 uppercase tracking-widest mb-8">
-        <Link href="/" className="hover:text-black">
-          Home
+      <div className="flex items-center space-x-2 text-xs text-[#86868b] mb-8">
+        <Link href="/" className="hover:text-[#1d1d1f] transition-colors">
+          Overview
         </Link>
         <span>/</span>
-        <Link href="/shop" className="hover:text-black">
-          Catalog
+        <Link href="/shop" className="hover:text-[#1d1d1f] transition-colors">
+          Collection
         </Link>
         <span>/</span>
-        <span className="text-neutral-900 font-semibold">{product.name}</span>
+        <span className="text-[#1d1d1f] font-medium">{product.name}</span>
       </div>
 
       {/* Main Product Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-        {/* Left Column: Multi-Angle Lookbook Gallery */}
+        {/* Left Column: Multi-Angle Gallery */}
         <div className="lg:col-span-7 space-y-4">
-          {/* Main Selected Image */}
-          <div className="relative aspect-[3/4] w-full overflow-hidden bg-[#ECECE9] border border-neutral-300 shadow-sm">
+          <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl bg-[#f5f5f7] shadow-xs">
             <Image
               src={product.images[selectedImageIndex] || product.images[0]}
               alt={product.name}
@@ -65,87 +62,76 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
               priority
               className="object-cover object-top"
             />
-            <div className="absolute top-4 left-4 bg-neutral-950 text-white text-[9px] font-mono tracking-widest px-2.5 py-1 uppercase">
+            <div className="absolute top-4 left-4 bg-white/80 backdrop-blur-md text-[#1d1d1f] text-xs font-medium px-3 py-1 rounded-full shadow-2xs">
               {product.edition}
             </div>
           </div>
 
-          {/* Secondary Gallery Row */}
+          {/* Thumbnails */}
           {product.images.length > 1 && (
-            <div className="grid grid-cols-2 gap-4">
+            <div className="flex space-x-3">
               {product.images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative aspect-[3/4] w-full overflow-hidden bg-[#ECECE9] border transition-all ${
+                  className={`relative w-20 h-24 rounded-xl overflow-hidden bg-[#f5f5f7] transition-all ${
                     selectedImageIndex === idx
-                      ? "border-black ring-2 ring-black"
-                      : "border-neutral-300 opacity-70 hover:opacity-100"
+                      ? "ring-2 ring-[#1d1d1f]"
+                      : "opacity-60 hover:opacity-100"
                   }`}
                 >
                   <Image
                     src={img}
-                    alt={`${product.name} angle ${idx + 1}`}
+                    alt={`${product.name} thumbnail ${idx + 1}`}
                     fill
                     className="object-cover object-top"
                   />
-                  <span className="absolute bottom-2 right-2 text-[9px] font-mono bg-white/90 px-1.5 py-0.5 text-neutral-700">
-                    VIEW 0{idx + 1}
-                  </span>
                 </button>
               ))}
             </div>
           )}
         </div>
 
-        {/* Right Column: Sticky Product Information Rail */}
-        <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
+        {/* Right Column: Sticky Product Info */}
+        <div className="lg:col-span-5 lg:sticky lg:top-20 space-y-6">
           <div>
-            <div className="flex items-center justify-between text-xs font-mono text-neutral-400 uppercase tracking-widest mb-1.5">
-              <span>{product.gender} · {product.category}</span>
-              <span>SKU: {product.id}</span>
-            </div>
+            <span className="text-xs font-medium text-[#86868b] block mb-1">
+              {product.gender} · {product.category}
+            </span>
 
-            <h1 className="font-display font-black text-2xl sm:text-4xl text-neutral-950 uppercase tracking-tight leading-tight">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
               {product.name}
             </h1>
 
-            <div className="mt-3 flex items-baseline space-x-3">
-              <span className="font-mono text-xl sm:text-2xl font-bold text-neutral-950">
-                {formatPrice(product.price)}
-              </span>
-              <span className="text-[11px] font-mono text-neutral-400">
-                Inclusive of all 2026 import tariffs
-              </span>
+            <div className="mt-2 text-xl font-semibold text-[#1d1d1f]">
+              {formatPrice(product.price)}
             </div>
           </div>
 
-          <div className="w-full h-[1px] bg-neutral-200" />
+          <div className="w-full h-[1px] bg-[#e5e5ea]" />
 
-          {/* Color Display */}
+          {/* Color Selection */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs font-mono">
-              <span className="text-neutral-500 uppercase">Shade:</span>
-              <span className="font-bold text-neutral-900">{product.color}</span>
+            <div className="flex justify-between text-xs">
+              <span className="text-[#86868b]">Color:</span>
+              <span className="font-medium text-[#1d1d1f]">{product.color}</span>
             </div>
             <div className="flex items-center space-x-2">
               <div
-                className="w-6 h-6 rounded-none border border-neutral-400 shadow-xs"
+                className="w-5 h-5 rounded-full border border-black/10 shadow-2xs"
                 style={{ backgroundColor: product.colorHex }}
                 title={product.color}
               />
-              <span className="text-xs font-mono text-neutral-600">
-                Natural mineral dye finish
-              </span>
+              <span className="text-xs text-[#86868b]">Natural mineral dyed</span>
             </div>
           </div>
 
-          {/* Size Selection */}
-          <div className="space-y-2 pt-2">
-            <div className="flex justify-between items-center text-xs font-mono">
-              <span className="text-neutral-600 uppercase">Select Proportion:</span>
-              <span className="text-neutral-400 hover:text-black cursor-pointer underline">
-                Measurement Chart
+          {/* Size Selector */}
+          <div className="space-y-2 pt-1">
+            <div className="flex justify-between items-center text-xs">
+              <span className="text-[#86868b]">Size:</span>
+              <span className="text-[#0071e3] hover:underline cursor-pointer">
+                Size guide
               </span>
             </div>
 
@@ -154,10 +140,10 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
                 <button
                   key={sz}
                   onClick={() => setSelectedSize(sz)}
-                  className={`py-3 text-xs font-mono uppercase tracking-wider border transition-all ${
+                  className={`py-2 text-xs font-medium rounded-full transition-all border ${
                     selectedSize === sz
-                      ? "bg-neutral-950 text-white border-neutral-950 font-bold"
-                      : "bg-white text-neutral-800 border-neutral-300 hover:border-black"
+                      ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                      : "bg-white text-[#1d1d1f] border-[#d2d2d7] hover:border-black"
                   }`}
                 >
                   {sz}
@@ -170,71 +156,67 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
           <div className="pt-2 space-y-3">
             <button
               onClick={handleAddToCart}
-              className="w-full bg-neutral-950 hover:bg-black text-white py-4 px-6 text-xs font-mono uppercase tracking-widest font-semibold flex items-center justify-center space-x-2 transition-all shadow-md"
+              className="w-full bg-[#1d1d1f] hover:bg-black text-white py-3.5 px-6 rounded-full text-sm font-medium flex items-center justify-center space-x-2 transition-all shadow-sm"
             >
               {added ? (
                 <>
                   <Check className="w-4 h-4 text-emerald-400" />
-                  <span>Secured in Bag</span>
+                  <span>Added to bag</span>
                 </>
               ) : (
-                <>
-                  <span>Acquire Garment — {formatPrice(product.price)}</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
+                <span>Add to bag — {formatPrice(product.price)}</span>
               )}
             </button>
 
-            <div className="flex items-center justify-center space-x-3 text-[10px] font-mono text-neutral-500 uppercase tracking-wider pt-1">
+            <div className="flex items-center justify-center space-x-4 text-xs text-[#86868b] pt-1">
               <span className="flex items-center space-x-1">
-                <ShieldCheck className="w-3 h-3 text-neutral-600" />
-                <span>Certified Sustainable</span>
+                <Truck className="w-3.5 h-3.5 text-[#86868b]" />
+                <span>Complimentary express shipping</span>
               </span>
               <span>·</span>
               <span className="flex items-center space-x-1">
-                <Sparkles className="w-3 h-3 text-neutral-600" />
-                <span>Biella Tailoring</span>
+                <ShieldCheck className="w-3.5 h-3.5 text-[#86868b]" />
+                <span>Lifetime repair guarantee</span>
               </span>
             </div>
           </div>
 
-          {/* Garment Technical Metrics */}
+          {/* Technical Specs Card */}
           {product.stats && (
-            <div className="grid grid-cols-3 gap-2 p-3 bg-neutral-100 border border-neutral-200 text-[10px] font-mono">
+            <div className="grid grid-cols-3 gap-2 p-3.5 bg-[#f5f5f7] rounded-2xl text-xs">
               <div>
-                <span className="text-neutral-400 block uppercase">Weight</span>
-                <span className="font-bold text-neutral-900">{product.stats.weight}</span>
+                <span className="text-[#86868b] block text-[11px]">Weight</span>
+                <span className="font-medium text-[#1d1d1f]">{product.stats.weight}</span>
               </div>
               <div>
-                <span className="text-neutral-400 block uppercase">Provenance</span>
-                <span className="font-bold text-neutral-900">{product.stats.origin}</span>
+                <span className="text-[#86868b] block text-[11px]">Origin</span>
+                <span className="font-medium text-[#1d1d1f]">{product.stats.origin}</span>
               </div>
               <div>
-                <span className="text-neutral-400 block uppercase">Cut</span>
-                <span className="font-bold text-neutral-900">{product.stats.silhouette}</span>
+                <span className="text-[#86868b] block text-[11px]">Fit</span>
+                <span className="font-medium text-[#1d1d1f]">{product.stats.silhouette}</span>
               </div>
             </div>
           )}
 
-          {/* Accordion Specification Tabs */}
-          <div className="border-t border-neutral-200 pt-4 space-y-3">
-            {/* 1. Design & Specifications */}
-            <div className="border-b border-neutral-200 pb-3">
+          {/* Accordion Tabs */}
+          <div className="border-t border-[#e5e5ea] pt-3 space-y-2">
+            <div className="border-b border-[#e5e5ea] pb-3">
               <button
                 onClick={() => toggleAccordion("details")}
-                className="w-full flex justify-between items-center text-xs font-mono uppercase tracking-wider text-neutral-900 font-bold py-1"
+                className="w-full flex justify-between items-center text-xs font-medium text-[#1d1d1f] py-1"
               >
-                <span>Fabric & Craftsmanship Details</span>
+                <span>Fabric & craftsmanship details</span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
+                  className={`w-3.5 h-3.5 text-[#86868b] transition-transform duration-200 ${
                     openAccordion === "details" ? "rotate-180" : ""
                   }`}
                 />
               </button>
               {openAccordion === "details" && (
-                <div className="pt-2 text-xs font-sans text-neutral-600 space-y-2">
-                  <p className="leading-relaxed">{product.description}</p>
-                  <ul className="list-disc list-inside space-y-1 pt-1 font-mono text-[11px] text-neutral-700">
+                <div className="pt-2 text-xs text-[#86868b] space-y-2 leading-relaxed">
+                  <p>{product.description}</p>
+                  <ul className="list-disc list-inside space-y-1 pt-1 text-[#1d1d1f]">
                     {product.details.map((detail, idx) => (
                       <li key={idx}>{detail}</li>
                     ))}
@@ -243,42 +225,40 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
               )}
             </div>
 
-            {/* 2. Fit & Measurements */}
-            <div className="border-b border-neutral-200 pb-3">
+            <div className="border-b border-[#e5e5ea] pb-3">
               <button
                 onClick={() => toggleAccordion("fit")}
-                className="w-full flex justify-between items-center text-xs font-mono uppercase tracking-wider text-neutral-900 font-bold py-1"
+                className="w-full flex justify-between items-center text-xs font-medium text-[#1d1d1f] py-1"
               >
-                <span>Architectural Fit Architecture</span>
+                <span>Fit & sizing</span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
+                  className={`w-3.5 h-3.5 text-[#86868b] transition-transform duration-200 ${
                     openAccordion === "fit" ? "rotate-180" : ""
                   }`}
                 />
               </button>
               {openAccordion === "fit" && (
-                <div className="pt-2 text-xs font-sans text-neutral-600 space-y-2">
-                  <p className="leading-relaxed">{product.fit}</p>
+                <div className="pt-2 text-xs text-[#86868b] leading-relaxed">
+                  <p>{product.fit}</p>
                 </div>
               )}
             </div>
 
-            {/* 3. Sustainability */}
-            <div className="border-b border-neutral-200 pb-3">
+            <div className="border-b border-[#e5e5ea] pb-3">
               <button
                 onClick={() => toggleAccordion("sustainability")}
-                className="w-full flex justify-between items-center text-xs font-mono uppercase tracking-wider text-neutral-900 font-bold py-1"
+                className="w-full flex justify-between items-center text-xs font-medium text-[#1d1d1f] py-1"
               >
-                <span>2026 Circularity & Sustainability</span>
+                <span>Environmental impact</span>
                 <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${
+                  className={`w-3.5 h-3.5 text-[#86868b] transition-transform duration-200 ${
                     openAccordion === "sustainability" ? "rotate-180" : ""
                   }`}
                 />
               </button>
               {openAccordion === "sustainability" && (
-                <div className="pt-2 text-xs font-sans text-neutral-600 space-y-2">
-                  <p className="leading-relaxed">{product.sustainability}</p>
+                <div className="pt-2 text-xs text-[#86868b] leading-relaxed">
+                  <p>{product.sustainability}</p>
                 </div>
               )}
             </div>
@@ -286,19 +266,16 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
         </div>
       </div>
 
-      {/* "COMPLETE THE LOOK" Recommendation Section */}
+      {/* Complete the Look Section */}
       {pairedProducts.length > 0 && (
-        <section className="mt-24 pt-16 border-t border-neutral-300">
-          <div className="flex items-center justify-between mb-8">
-            <div>
-              <span className="text-[10px] font-mono tracking-widest text-neutral-400 uppercase">
-                CURATED COMPANIONS
-              </span>
-              <h2 className="font-display font-black text-2xl sm:text-3xl uppercase tracking-tight text-neutral-950 mt-0.5">
-                STYLE WITH
-              </h2>
-            </div>
-            <BrutalistAsterisk size={24} className="text-neutral-800" />
+        <section className="mt-20 pt-12 border-t border-[#e5e5ea]">
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold tracking-tight text-[#1d1d1f]">
+              Complete the look
+            </h2>
+            <p className="text-xs text-[#86868b] mt-0.5">
+              Pieces designed to pair seamlessly with {product.name}.
+            </p>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">

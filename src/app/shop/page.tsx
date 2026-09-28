@@ -5,33 +5,33 @@ import { useSearchParams } from "next/navigation";
 import { PRODUCTS } from "@/data/products";
 import { ProductCategory, GenderCategory } from "@/types";
 import { ProductCard } from "@/components/ProductCard";
-import { BrutalistAsterisk } from "@/components/BrutalistAsterisk";
 import { LayoutGrid, Grid2X2, RotateCcw } from "lucide-react";
 
 function ShopContent() {
   const searchParams = useSearchParams();
   const initialCategory = (searchParams.get("category") as ProductCategory) || "all";
+  const initialGender = (searchParams.get("gender") as GenderCategory) || "all";
 
   const [categoryFilter, setCategoryFilter] = useState<ProductCategory>(initialCategory);
-  const [genderFilter, setGenderFilter] = useState<GenderCategory>("all");
+  const [genderFilter, setGenderFilter] = useState<GenderCategory>(initialGender);
   const [sortBy, setSortBy] = useState<"featured" | "price-asc" | "price-desc" | "newest">("featured");
   const [gridColumns, setGridColumns] = useState<2 | 4>(4);
 
   const categories: { label: string; value: ProductCategory }[] = [
-    { label: "ALL CATEGORIES", value: "all" },
-    { label: "OUTERWEAR", value: "outerwear" },
-    { label: "TAILORING", value: "tailoring" },
-    { label: "KNITWEAR", value: "knitwear" },
-    { label: "BOTTOMS", value: "bottoms" },
-    { label: "TOPS", value: "tops" },
-    { label: "DRESSES", value: "dresses" },
+    { label: "All garments", value: "all" },
+    { label: "Outerwear", value: "outerwear" },
+    { label: "Tailoring", value: "tailoring" },
+    { label: "Knitwear", value: "knitwear" },
+    { label: "Bottoms", value: "bottoms" },
+    { label: "Tops", value: "tops" },
+    { label: "Dresses", value: "dresses" },
   ];
 
   const genders: { label: string; value: GenderCategory }[] = [
-    { label: "ALL SILHOUETTES", value: "all" },
-    { label: "WOMEN", value: "female" },
-    { label: "MEN", value: "male" },
-    { label: "UNISEX", value: "unisex" },
+    { label: "All (12)", value: "all" },
+    { label: "Women", value: "female" },
+    { label: "Men", value: "male" },
+    { label: "Unisex", value: "unisex" },
   ];
 
   const filteredProducts = useMemo(() => {
@@ -59,66 +59,59 @@ function ShopContent() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-      {/* Catalog Title Header */}
-      <div className="border-b border-neutral-200 pb-8 mb-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-16 text-[#1d1d1f]">
+      {/* Apple-style Catalog Header */}
+      <div className="border-b border-[#e5e5ea] pb-8 mb-8">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <div className="flex items-center space-x-2 text-[10px] font-mono tracking-[0.25em] text-neutral-400 uppercase mb-2">
-              <span>EDITION 2026</span>
-              <span>·</span>
-              <span>12 SCULPTURAL SILHOUETTES</span>
-            </div>
-            <h1 className="font-display font-black text-3xl sm:text-5xl lg:text-6xl tracking-tight uppercase text-neutral-950">
-              FULL CATALOG
+            <span className="text-xs font-medium text-[#86868b] block mb-1">
+              2026 Collection
+            </span>
+            <h1 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[#1d1d1f]">
+              Shop the Collection
             </h1>
+            <p className="text-sm text-[#86868b] mt-1.5">
+              Showing {filteredProducts.length} of 12 garments designed for modern living.
+            </p>
           </div>
 
-          <div className="flex items-center space-x-4 text-xs font-mono text-neutral-500">
-            <span>
-              SHOWING <strong className="text-neutral-900">{filteredProducts.length}</strong> OF 12 DESIGNS
-            </span>
-            <div className="hidden sm:flex items-center border border-neutral-300">
-              <button
-                onClick={() => setGridColumns(2)}
-                className={`p-1.5 transition-colors ${
-                  gridColumns === 2 ? "bg-black text-white" : "text-neutral-600 hover:text-black"
-                }`}
-                title="2-Column Editorial View"
-              >
-                <Grid2X2 className="w-4 h-4" />
-              </button>
-              <button
-                onClick={() => setGridColumns(4)}
-                className={`p-1.5 transition-colors ${
-                  gridColumns === 4 ? "bg-black text-white" : "text-neutral-600 hover:text-black"
-                }`}
-                title="4-Column Precision View"
-              >
-                <LayoutGrid className="w-4 h-4" />
-              </button>
-            </div>
+          {/* Grid Toggle */}
+          <div className="hidden sm:flex items-center space-x-1 bg-[#f5f5f7] p-1 rounded-full border border-[#e5e5ea]">
+            <button
+              onClick={() => setGridColumns(2)}
+              className={`p-1.5 rounded-full transition-all ${
+                gridColumns === 2 ? "bg-white text-[#1d1d1f] shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
+              }`}
+              title="2-Column View"
+            >
+              <Grid2X2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => setGridColumns(4)}
+              className={`p-1.5 rounded-full transition-all ${
+                gridColumns === 4 ? "bg-white text-[#1d1d1f] shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
+              }`}
+              title="4-Column View"
+            >
+              <LayoutGrid className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </div>
 
       {/* Filter Control Bar */}
       <div className="mb-10 space-y-4">
-        {/* Desktop Filter Row */}
         <div className="flex flex-wrap items-center justify-between gap-4">
-          {/* Gender Filter Pills */}
-          <div className="flex flex-wrap items-center gap-1.5">
-            <span className="text-[10px] font-mono uppercase text-neutral-400 mr-2 tracking-wider hidden sm:inline">
-              Gender:
-            </span>
+          {/* Gender Pills */}
+          <div className="flex p-1 bg-[#f5f5f7] rounded-full border border-[#e5e5ea]">
             {genders.map((g) => (
               <button
                 key={g.value}
                 onClick={() => setGenderFilter(g.value)}
-                className={`px-3 py-1 text-xs font-mono uppercase tracking-wider transition-all border ${
+                className={`px-4 py-1.5 text-xs font-medium rounded-full transition-all ${
                   genderFilter === g.value
-                    ? "bg-neutral-900 text-white border-neutral-900 font-semibold"
-                    : "bg-white text-neutral-700 border-neutral-300 hover:border-black"
+                    ? "bg-white text-[#1d1d1f] shadow-xs"
+                    : "text-[#86868b] hover:text-[#1d1d1f]"
                 }`}
               >
                 {g.label}
@@ -128,9 +121,7 @@ function ShopContent() {
 
           {/* Sort Selector */}
           <div className="flex items-center space-x-2">
-            <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider">
-              Sort:
-            </span>
+            <span className="text-xs text-[#86868b]">Sort by:</span>
             <select
               value={sortBy}
               onChange={(e) =>
@@ -138,18 +129,18 @@ function ShopContent() {
                   e.target.value as "featured" | "price-asc" | "price-desc" | "newest"
                 )
               }
-              className="bg-white border border-neutral-300 text-xs font-mono text-neutral-800 py-1.5 px-3 uppercase tracking-wider focus:outline-none focus:border-black rounded-none cursor-pointer"
+              className="bg-white border border-[#d2d2d7] text-xs text-[#1d1d1f] py-1.5 px-3 rounded-full focus:outline-none focus:border-[#0071e3] cursor-pointer"
             >
-              <option value="featured">Featured Curations</option>
-              <option value="newest">2026 Releases</option>
-              <option value="price-asc">Price: Low to High</option>
-              <option value="price-desc">Price: High to Low</option>
+              <option value="featured">Featured</option>
+              <option value="newest">New arrivals</option>
+              <option value="price-asc">Price: Low to high</option>
+              <option value="price-desc">Price: High to low</option>
             </select>
 
             {hasActiveFilters && (
               <button
                 onClick={resetFilters}
-                className="flex items-center space-x-1 text-xs font-mono text-neutral-500 hover:text-black border border-neutral-300 px-2.5 py-1.5 transition-colors"
+                className="flex items-center space-x-1 text-xs text-[#86868b] hover:text-[#1d1d1f] bg-[#f5f5f7] px-3 py-1.5 rounded-full transition-colors"
                 title="Reset filters"
               >
                 <RotateCcw className="w-3 h-3" />
@@ -159,19 +150,16 @@ function ShopContent() {
           </div>
         </div>
 
-        {/* Category Pills Row */}
-        <div className="flex items-center overflow-x-auto no-scrollbar gap-1.5 pt-2 border-t border-neutral-100 pb-1">
-          <span className="text-[10px] font-mono uppercase text-neutral-400 mr-2 tracking-wider whitespace-nowrap">
-            Category:
-          </span>
+        {/* Category Filter Pills */}
+        <div className="flex items-center overflow-x-auto no-scrollbar gap-1.5 pt-2">
           {categories.map((c) => (
             <button
               key={c.value}
               onClick={() => setCategoryFilter(c.value)}
-              className={`px-3 py-1 text-[11px] font-mono uppercase tracking-wider transition-all whitespace-nowrap border ${
+              className={`px-3.5 py-1 text-xs font-medium rounded-full transition-all whitespace-nowrap ${
                 categoryFilter === c.value
-                  ? "bg-neutral-950 text-white border-neutral-950 font-semibold"
-                  : "bg-white text-neutral-600 border-neutral-200 hover:border-black hover:text-black"
+                  ? "bg-[#1d1d1f] text-white"
+                  : "bg-[#f5f5f7] text-[#86868b] hover:text-[#1d1d1f] hover:bg-[#e5e5ea]"
               }`}
             >
               {c.label}
@@ -182,25 +170,24 @@ function ShopContent() {
 
       {/* Product Display Grid */}
       {filteredProducts.length === 0 ? (
-        <div className="py-24 text-center space-y-4 border border-dashed border-neutral-300 p-8">
-          <BrutalistAsterisk size={36} className="text-neutral-400 mx-auto" />
-          <h3 className="font-display text-lg font-bold uppercase tracking-wider text-neutral-800">
-            No Silhouettes Match Selected Criteria
+        <div className="py-20 text-center space-y-3 bg-[#f5f5f7] rounded-3xl p-8">
+          <h3 className="text-base font-semibold text-[#1d1d1f]">
+            No garments match the selected filters
           </h3>
-          <p className="text-xs font-mono text-neutral-500 max-w-sm mx-auto">
-            Try adjusting your category or silhouette filter to inspect the remainder of the 2026 wardrobe collection.
+          <p className="text-xs text-[#86868b] max-w-sm mx-auto">
+            Try adjusting your filter settings to explore the complete collection.
           </p>
           <button
             onClick={resetFilters}
-            className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest bg-neutral-900 text-white px-5 py-2.5 hover:bg-black transition-colors"
+            className="inline-flex items-center space-x-1.5 text-xs bg-[#1d1d1f] text-white px-4 py-2 rounded-full hover:bg-black transition-colors"
           >
-            <RotateCcw className="w-3.5 h-3.5" />
-            <span>Reset All Filters</span>
+            <RotateCcw className="w-3 h-3" />
+            <span>Show all garments</span>
           </button>
         </div>
       ) : (
         <div
-          className={`grid gap-4 sm:gap-6 lg:gap-8 ${
+          className={`grid gap-4 sm:gap-6 ${
             gridColumns === 2
               ? "grid-cols-1 sm:grid-cols-2"
               : "grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
@@ -221,7 +208,7 @@ function ShopContent() {
 
 export default function ShopPage() {
   return (
-    <Suspense fallback={<div className="max-w-7xl mx-auto p-12 text-xs font-mono">Loading Blinc Catalog...</div>}>
+    <Suspense fallback={<div className="max-w-6xl mx-auto p-12 text-xs text-[#86868b]">Loading collection...</div>}>
       <ShopContent />
     </Suspense>
   );
