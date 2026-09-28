@@ -43,14 +43,18 @@ export function Navbar() {
               Collection (12)
             </Link>
             <Link
-              href="/#materials"
-              className="hover:text-[#1d1d1f] transition-colors"
+              href="/materials"
+              className={`hover:text-[#1d1d1f] transition-colors ${
+                pathname === "/materials" ? "text-[#1d1d1f] font-medium" : ""
+              }`}
             >
               Materials
             </Link>
             <Link
-              href="/#philosophy"
-              className="hover:text-[#1d1d1f] transition-colors"
+              href="/philosophy"
+              className={`hover:text-[#1d1d1f] transition-colors ${
+                pathname === "/philosophy" ? "text-[#1d1d1f] font-medium" : ""
+              }`}
             >
               Philosophy
             </Link>
@@ -135,16 +139,20 @@ export function Navbar() {
               Collection (12 Outfits)
             </Link>
             <Link
-              href="/#materials"
+              href="/materials"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-[#515154] hover:text-[#1d1d1f]"
+              className={`transition-colors ${
+                pathname === "/materials" ? "text-[#1d1d1f] font-medium" : "text-[#515154] hover:text-[#1d1d1f]"
+              }`}
             >
               Materials
             </Link>
             <Link
-              href="/#philosophy"
+              href="/philosophy"
               onClick={() => setMobileMenuOpen(false)}
-              className="text-[#515154] hover:text-[#1d1d1f]"
+              className={`transition-colors ${
+                pathname === "/philosophy" ? "text-[#1d1d1f] font-medium" : "text-[#515154] hover:text-[#1d1d1f]"
+              }`}
             >
               Philosophy
             </Link>

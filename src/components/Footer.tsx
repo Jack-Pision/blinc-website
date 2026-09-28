@@ -18,10 +18,10 @@ export function Footer() {
           <Link href="/shop" className="hover:text-[#1d1d1f] transition-colors">
             Collection (12)
           </Link>
-          <Link href="/#materials" className="hover:text-[#1d1d1f] transition-colors">
+          <Link href="/materials" className="hover:text-[#1d1d1f] transition-colors">
             Materials
           </Link>
-          <Link href="/#philosophy" className="hover:text-[#1d1d1f] transition-colors">
+          <Link href="/philosophy" className="hover:text-[#1d1d1f] transition-colors">
             Philosophy
           </Link>
         </nav>
