@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Philosophy — Blinc",
@@ -99,10 +98,9 @@ export default function PhilosophyPage() {
       <div className="mt-16 text-center">
         <Link
           href="/shop"
-          className="inline-flex items-center space-x-2 bg-[#1d1d1f] hover:bg-black text-white text-xs font-medium px-6 py-3 rounded-full transition-colors"
+          className="inline-flex items-center bg-[#1d1d1f] hover:bg-black text-white text-xs font-medium px-6 py-3 rounded-full transition-colors"
         >
-          <span>View the 12 silhouettes</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          View the 12 silhouettes
         </Link>
       </div>
     </div>

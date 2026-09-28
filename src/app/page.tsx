@@ -6,7 +6,6 @@ import Link from "next/link";
 import { PRODUCTS } from "@/data/products";
 import { ProductCard } from "@/components/ProductCard";
 import { CapsuleMixer } from "@/components/CapsuleMixer";
-import { ArrowRight } from "lucide-react";
 
 type GenderFilter = "all" | "female" | "male" | "unisex";
 
@@ -40,14 +39,13 @@ export default function HomePage() {
           <div className="pt-4 flex items-center justify-center gap-3">
             <Link
               href="/shop"
-              className="bg-[#1d1d1f] hover:bg-black text-white text-sm font-medium px-5 py-2.5 rounded-full transition-colors inline-flex items-center space-x-2"
+              className="bg-[#1d1d1f] hover:bg-black text-white text-sm font-medium px-6 py-2.5 rounded-full transition-colors inline-flex items-center"
             >
-              <span>Explore collection</span>
-              <ArrowRight className="w-4 h-4" />
+              Explore collection
             </Link>
             <Link
               href="/philosophy"
-              className="bg-[#f5f5f7] hover:bg-[#e5e5ea] text-[#1d1d1f] text-sm font-medium px-5 py-2.5 rounded-full transition-colors"
+              className="bg-[#f5f5f7] hover:bg-[#e5e5ea] text-[#1d1d1f] text-sm font-medium px-6 py-2.5 rounded-full transition-colors"
             >
               Philosophy
             </Link>
@@ -124,15 +122,14 @@ export default function HomePage() {
         <div className="text-center mt-12">
           <Link
             href="/shop"
-            className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
+            className="inline-flex items-center text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
           >
-            <span>Open catalog with filters and technical specs</span>
-            <ArrowRight className="w-3.5 h-3.5" />
+            Open catalog with filters and technical specs →
           </Link>
         </div>
       </section>
 
-      {/* 2.5 CAPSULE MIXER & SILHOUETTE LAB */}
+      {/* 3. CAPSULE MIXER & SILHOUETTE LAB */}
       <section id="capsule-mixer" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-[#e5e5ea]">
         <CapsuleMixer />
       </section>

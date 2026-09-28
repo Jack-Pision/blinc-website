@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
-import { Eye, Plus, Check } from "lucide-react";
+import { Plus, Check } from "lucide-react";
 
 interface ProductCardProps {
   product: Product;
@@ -129,9 +129,8 @@ export function ProductCard({ product, priority = false }: ProductCardProps) {
                   e.stopPropagation();
                   openQuickView(product);
                 }}
-                className="flex-1 bg-white/95 hover:bg-white text-[#1d1d1f] text-xs font-medium py-2 rounded-xl flex items-center justify-center space-x-1.5 shadow-sm border border-[#e5e5ea] active:scale-[0.98] transition-all"
+                className="flex-1 bg-white/95 hover:bg-white text-[#1d1d1f] text-xs font-medium py-2 rounded-xl flex items-center justify-center shadow-sm border border-[#e5e5ea] active:scale-[0.98] transition-all"
               >
-                <Eye className="w-3.5 h-3.5" />
                 <span>Quick look</span>
               </button>
 

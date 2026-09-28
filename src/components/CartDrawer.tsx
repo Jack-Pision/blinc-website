@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import { X, Plus, Minus, Trash2, ArrowRight } from "lucide-react";
+import { X, Plus, Minus, Trash2 } from "lucide-react";
 
 export function CartDrawer() {
   const {
@@ -87,10 +87,9 @@ export function CartDrawer() {
                 <Link
                   href="/shop"
                   onClick={closeCart}
-                  className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
+                  className="inline-flex items-center text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
                 >
-                  <span>Explore 12-piece collection</span>
-                  <ArrowRight className="w-3.5 h-3.5" />
+                  <span>Explore 12-piece collection →</span>
                 </Link>
               </div>
             ) : (

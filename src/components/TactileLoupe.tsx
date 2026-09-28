@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, MouseEvent, TouchEvent } from "react";
 import Image from "next/image";
-import { ZoomIn, Eye, Sparkles } from "lucide-react";
 
 interface TactileLoupeProps {
   src: string;
@@ -75,9 +74,8 @@ export function TactileLoupe({ src, alt, priority = false }: TactileLoupeProps) 
               <div className="w-1.5 h-1.5 rounded-full bg-white shadow-xs" />
             </div>
 
-            <div className="absolute top-4 left-4 bg-black/75 backdrop-blur-md text-white text-[11px] font-medium px-3 py-1 rounded-full flex items-center space-x-1.5 shadow-sm">
-              <Sparkles className="w-3 h-3 text-amber-400" />
-              <span>Tactile Weave Inspector · 2.8x Macro</span>
+            <div className="absolute top-4 left-4 bg-black/80 backdrop-blur-md text-white text-[11px] font-medium px-3 py-1 rounded-full shadow-sm">
+              Tactile Weave Inspector · 2.8x Macro
             </div>
           </div>
         )}
@@ -88,29 +86,19 @@ export function TactileLoupe({ src, alt, priority = false }: TactileLoupeProps) 
         <button
           type="button"
           onClick={() => setIsInspecting(!isInspecting)}
-          className={`inline-flex items-center space-x-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all ${
+          className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all ${
             isInspecting
               ? "bg-[#1d1d1f] text-white shadow-xs"
               : "bg-[#f5f5f7] text-[#515154] hover:text-[#1d1d1f] hover:bg-[#e5e5ea]"
           }`}
         >
-          {isInspecting ? (
-            <>
-              <Eye className="w-3.5 h-3.5" />
-              <span>Exit Weave Inspection</span>
-            </>
-          ) : (
-            <>
-              <ZoomIn className="w-3.5 h-3.5" />
-              <span>Inspect Fabric Weave (2.8x)</span>
-            </>
-          )}
+          {isInspecting ? "Exit Weave Inspection" : "Inspect Fabric Weave (2.8x)"}
         </button>
 
         <span className="text-[11px] text-[#86868b] hidden sm:inline">
           {isInspecting
             ? "Move cursor across garment to inspect yarns"
-            : "High-resolution studio photography"}
+            : "Optical high-density weave zoom"}
         </span>
       </div>
     </div>

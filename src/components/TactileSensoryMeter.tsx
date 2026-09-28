@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { TactileProfile } from "@/types";
-import { Layers, Feather, Sparkles, Thermometer, Info } from "lucide-react";
 
 interface TactileSensoryMeterProps {
   tactile?: TactileProfile;
@@ -19,7 +18,6 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       label: "Drape & Movement",
       value: tactile.drape,
       specLabel: tactile.drapeLabel,
-      icon: Layers,
       minLabel: "Sculptural",
       maxLabel: "Liquid Fluid",
       description:
@@ -30,7 +28,6 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       label: "Material Weight",
       value: tactile.weight,
       specLabel: tactile.weightLabel,
-      icon: Feather,
       minLabel: "Airy",
       maxLabel: "Substantial",
       description:
@@ -41,7 +38,6 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       label: "Surface Finish",
       value: tactile.finish,
       specLabel: tactile.finishLabel,
-      icon: Sparkles,
       minLabel: "Chalk Matte",
       maxLabel: "Satin Luster",
       description:
@@ -52,7 +48,6 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       label: "Thermal Comfort",
       value: tactile.thermal,
       specLabel: tactile.thermalLabel,
-      icon: Thermometer,
       minLabel: "Cool Season",
       maxLabel: "Deep Winter",
       description:
@@ -78,9 +73,11 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       </div>
 
       {/* Tactile Note Box */}
-      <div className="bg-white/80 backdrop-blur-xs p-3.5 rounded-2xl border border-[#e5e5ea] text-xs text-[#515154] leading-relaxed flex items-start space-x-2.5">
-        <Info className="w-4 h-4 text-[#86868b] flex-shrink-0 mt-0.5" />
-        <p className="font-normal italic">
+      <div className="bg-white/80 backdrop-blur-xs p-4 rounded-2xl border border-[#e5e5ea] text-xs leading-relaxed">
+        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#86868b] block mb-1">
+          Tactile Impression
+        </span>
+        <p className="font-normal italic text-[#1d1d1f]">
           &ldquo;{tactile.textureNote}&rdquo;
         </p>
       </div>
@@ -88,7 +85,6 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
       {/* 4 Dimension Bars */}
       <div className="space-y-4 pt-1">
         {metrics.map((metric) => {
-          const Icon = metric.icon;
           const isTooltipOpen = activeTooltip === metric.id;
 
           return (
@@ -99,9 +95,8 @@ export function TactileSensoryMeter({ tactile }: TactileSensoryMeterProps) {
                   onClick={() =>
                     setActiveTooltip(isTooltipOpen ? null : metric.id)
                   }
-                  className="flex items-center space-x-1.5 text-[#1d1d1f] font-medium hover:text-[#0071e3] transition-colors"
+                  className="text-[#1d1d1f] font-medium hover:text-[#0071e3] transition-colors text-left"
                 >
-                  <Icon className="w-3.5 h-3.5 text-[#86868b]" />
                   <span>{metric.label}</span>
                 </button>
                 <span className="text-xs text-[#1d1d1f] font-medium">

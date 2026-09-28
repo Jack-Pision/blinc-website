@@ -8,13 +8,7 @@ import { useCart } from "@/context/CartContext";
 import { ProductCard } from "@/components/ProductCard";
 import { TactileLoupe } from "@/components/TactileLoupe";
 import { TactileSensoryMeter } from "@/components/TactileSensoryMeter";
-import {
-  Check,
-  ChevronDown,
-  ShieldCheck,
-  Truck,
-  Sparkles,
-} from "lucide-react";
+import { Check, ChevronDown } from "lucide-react";
 
 interface ProductDetailViewProps {
   product: Product;
@@ -38,12 +32,10 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
     setTimeout(() => setAdded(false), 1500);
   };
 
-  const activeImage = product.images[selectedImageIndex] || product.images[0];
-
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14 text-[#1d1d1f]">
-      {/* Breadcrumb path */}
-      <div className="flex items-center space-x-2 text-xs text-[#86868b] mb-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-14">
+      {/* Breadcrumb / Top Bar */}
+      <nav className="flex items-center space-x-2 text-xs text-[#86868b] mb-8">
         <Link href="/" className="hover:text-[#1d1d1f] transition-colors">
           Overview
         </Link>
@@ -52,30 +44,32 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
           Collection
         </Link>
         <span>/</span>
-        <span className="text-[#1d1d1f] font-medium">{product.name}</span>
-      </div>
+        <span className="text-[#1d1d1f] font-medium truncate max-w-[200px]">
+          {product.name}
+        </span>
+      </nav>
 
-      {/* Main Product Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
-        {/* Left Column: Multi-Angle Gallery & Tactile Loupe */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Interactive Tactile Loupe */}
+      {/* Main Product Showcase: 2-Column Responsive Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14">
+        {/* Left Column: Interactive Loupe + Image Gallery (7 cols on desktop) */}
+        <div className="lg:col-span-7 space-y-4">
+          {/* Main Inspection Canvas with Tactile Loupe */}
           <TactileLoupe
-            src={activeImage}
+            src={product.images[selectedImageIndex] || product.images[0]}
             alt={product.name}
             priority
           />
 
           {/* Thumbnails */}
           {product.images.length > 1 && (
-            <div className="flex space-x-3 pt-2">
+            <div className="flex space-x-3 overflow-x-auto no-scrollbar py-1">
               {product.images.map((img, idx) => (
                 <button
                   key={idx}
                   onClick={() => setSelectedImageIndex(idx)}
-                  className={`relative w-20 h-24 rounded-2xl overflow-hidden bg-[#f5f5f7] transition-all border ${
+                  className={`relative w-20 h-24 rounded-2xl overflow-hidden flex-shrink-0 transition-all border ${
                     selectedImageIndex === idx
-                      ? "ring-2 ring-[#1d1d1f] border-transparent"
+                      ? "border-[#1d1d1f] ring-2 ring-[#1d1d1f]/10"
                       : "border-[#e5e5ea] opacity-60 hover:opacity-100"
                   }`}
                 >
@@ -90,61 +84,67 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
             </div>
           )}
 
-          {/* Tactile Sensory Meter embedded in left column on desktop */}
-          <div className="pt-6 hidden lg:block">
+          {/* Tactile Sensory Meter (Desktop placement below gallery) */}
+          <div className="hidden lg:block pt-6">
             <TactileSensoryMeter tactile={product.tactile} />
           </div>
         </div>
 
-        {/* Right Column: Sticky Product Info */}
-        <div className="lg:col-span-5 lg:sticky lg:top-20 space-y-6">
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <span className="text-xs font-medium text-[#86868b] capitalize">
+        {/* Right Column: Garment Information & Commerce (5 cols on desktop) */}
+        <div className="lg:col-span-5 space-y-6">
+          {/* Header & Badges */}
+          <div className="space-y-2">
+            <div className="flex items-center space-x-2">
+              <span className="bg-[#f5f5f7] text-[#515154] text-xs font-medium px-3 py-1 rounded-full border border-[#e5e5ea] capitalize">
                 {product.gender} · {product.category}
               </span>
-              <span className="text-[11px] font-medium text-[#86868b] bg-[#f5f5f7] px-2.5 py-0.5 rounded-full border border-[#e5e5ea]">
-                {product.edition}
-              </span>
+              {product.isNew && (
+                <span className="bg-[#1d1d1f] text-white text-xs font-medium px-3 py-1 rounded-full">
+                  2026 Edition
+                </span>
+              )}
             </div>
 
-            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1d1d1f] leading-snug">
               {product.name}
             </h1>
 
-            <div className="mt-2 text-xl font-semibold text-[#1d1d1f]">
+            <div className="text-xl font-medium text-[#1d1d1f] pt-1">
               {formatPrice(product.price)}
             </div>
           </div>
 
-          <div className="w-full h-[1px] bg-[#e5e5ea]" />
-
-          {/* Color Selection */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-xs">
-              <span className="text-[#86868b]">Color:</span>
-              <span className="font-medium text-[#1d1d1f]">{product.color}</span>
+          {/* Material & Color Profile */}
+          <div className="p-4 bg-[#f5f5f7] rounded-2xl border border-[#e5e5ea]/80 space-y-2 text-xs">
+            <div className="flex justify-between items-center">
+              <span className="text-[#86868b]">Textile:</span>
+              <span className="font-medium text-[#1d1d1f]">{product.material}</span>
             </div>
-            <div className="flex items-center space-x-2">
-              <div
-                className="w-5 h-5 rounded-full border border-black/10 shadow-2xs"
-                style={{ backgroundColor: product.colorHex }}
-                title={product.color}
-              />
-              <span className="text-xs text-[#86868b]">Natural low-impact mineral dye</span>
+            <div className="flex justify-between items-center">
+              <span className="text-[#86868b]">Shade:</span>
+              <div className="flex items-center space-x-2">
+                <span
+                  className="w-3 h-3 rounded-full border border-black/10 inline-block"
+                  style={{ backgroundColor: product.colorHex }}
+                />
+                <span className="font-medium text-[#1d1d1f]">{product.color}</span>
+              </div>
             </div>
           </div>
 
+          {/* Editorial Description */}
+          <p className="text-sm text-[#515154] leading-relaxed">
+            {product.description}
+          </p>
+
           {/* Size Selector */}
-          <div className="space-y-2 pt-1">
+          <div className="space-y-2 pt-2">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-[#86868b]">Selected Size: <strong className="text-[#1d1d1f]">{selectedSize}</strong></span>
-              <span className="text-[#0071e3] hover:underline cursor-pointer">
-                Measurement matrix
-              </span>
+              <span className="text-[#86868b]">Select Size</span>
+              <span className="text-[#1d1d1f] font-medium">Selected: {selectedSize}</span>
             </div>
 
-            <div className="grid grid-cols-5 gap-2">
+            <div className="grid grid-cols-4 gap-2">
               {product.sizes.map((sz) => (
                 <button
                   key={sz}
@@ -177,16 +177,10 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
               )}
             </button>
 
-            <div className="flex items-center justify-center space-x-4 text-xs text-[#86868b] pt-1">
-              <span className="flex items-center space-x-1">
-                <Truck className="w-3.5 h-3.5 text-[#86868b]" />
-                <span>Complimentary express delivery</span>
-              </span>
-              <span>·</span>
-              <span className="flex items-center space-x-1">
-                <ShieldCheck className="w-3.5 h-3.5 text-[#86868b]" />
-                <span>Lifetime repair guarantee</span>
-              </span>
+            <div className="flex items-center justify-center space-x-3 text-xs text-[#86868b] pt-1">
+              <span>Complimentary express delivery</span>
+              <span className="text-[#d2d2d7]">·</span>
+              <span>Lifetime repair guarantee</span>
             </div>
           </div>
 
@@ -294,10 +288,9 @@ export function ProductDetailView({ product, pairedProducts }: ProductDetailView
             </div>
             <Link
               href="/#capsule-mixer"
-              className="hidden sm:inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
+              className="hidden sm:inline-flex items-center text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
             >
-              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
-              <span>Launch Silhouette Lab</span>
+              <span>Launch Silhouette Lab →</span>
             </Link>
           </div>
 

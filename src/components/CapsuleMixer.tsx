@@ -5,7 +5,7 @@ import Image from "next/image";
 import { PRODUCTS } from "@/data/products";
 import { Product } from "@/types";
 import { useCart } from "@/context/CartContext";
-import { Shuffle, Check, Plus, Sparkles } from "lucide-react";
+import { Check } from "lucide-react";
 
 export function CapsuleMixer() {
   const { addItem, formatPrice } = useCart();
@@ -66,8 +66,7 @@ export function CapsuleMixer() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
         <div className="space-y-2">
-          <div className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#86868b] bg-white px-3 py-1 rounded-full border border-[#e5e5ea]">
-            <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+          <div className="inline-flex items-center text-xs font-medium text-[#86868b] bg-white px-3 py-1 rounded-full border border-[#e5e5ea]">
             <span>Interactive Silhouette Lab</span>
           </div>
           <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-[#1d1d1f]">
@@ -81,10 +80,9 @@ export function CapsuleMixer() {
         <button
           type="button"
           onClick={handleShuffle}
-          className="inline-flex items-center space-x-1.5 bg-white hover:bg-[#e5e5ea] text-[#1d1d1f] text-xs font-medium px-4 py-2 rounded-full border border-[#e5e5ea] transition-all shadow-xs self-start sm:self-auto"
+          className="inline-flex items-center bg-white hover:bg-[#e5e5ea] text-[#1d1d1f] text-xs font-medium px-4 py-2 rounded-full border border-[#e5e5ea] transition-all shadow-xs self-start sm:self-auto"
         >
-          <Shuffle className="w-3.5 h-3.5" />
-          <span>Shuffle Silhouette</span>
+          Shuffle Silhouette
         </button>
       </div>
 
@@ -284,10 +282,7 @@ export function CapsuleMixer() {
                 <span>3 Garments Added to Bag</span>
               </>
             ) : (
-              <>
-                <Plus className="w-4 h-4" />
-                <span>Add Complete Silhouette ({formatPrice(totalPrice)})</span>
-              </>
+              <span>Add Complete Silhouette · {formatPrice(totalPrice)}</span>
             )}
           </button>
         </div>

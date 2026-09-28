@@ -2,7 +2,6 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { ArrowRight, Sparkles, ShieldCheck, Leaf } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Materials & Craft — Blinc",
@@ -136,12 +135,12 @@ export default function MaterialsPage() {
         ))}
       </div>
 
-      {/* Sustainable Standards Banner */}
+      {/* Sustainable Standards Banner — Clean Typographic Indexing */}
       <div className="mt-16 sm:mt-24 p-8 sm:p-12 bg-white rounded-3xl border border-[#e5e5ea] grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="space-y-2">
-          <div className="w-8 h-8 rounded-full bg-[#f5f5f7] flex items-center justify-center text-[#1d1d1f]">
-            <Leaf className="w-4 h-4 text-emerald-600" />
-          </div>
+          <span className="text-xs font-semibold text-[#86868b] block">
+            01 / Standard
+          </span>
           <h3 className="text-sm font-semibold text-[#1d1d1f]">Zero Synthetic Blends</h3>
           <p className="text-xs text-[#86868b] leading-relaxed">
             All woven outer garments are composed of 100% natural, biodegradable fibers designed for end-of-life circularity.
@@ -149,9 +148,9 @@ export default function MaterialsPage() {
         </div>
 
         <div className="space-y-2">
-          <div className="w-8 h-8 rounded-full bg-[#f5f5f7] flex items-center justify-center text-[#1d1d1f]">
-            <ShieldCheck className="w-4 h-4 text-[#0071e3]" />
-          </div>
+          <span className="text-xs font-semibold text-[#86868b] block">
+            02 / Standard
+          </span>
           <h3 className="text-sm font-semibold text-[#1d1d1f]">Traceable Provenance</h3>
           <p className="text-xs text-[#86868b] leading-relaxed">
             Every textile batch carries verified chain-of-custody documentation tracing back to individual farms and mills.
@@ -159,9 +158,9 @@ export default function MaterialsPage() {
         </div>
 
         <div className="space-y-2">
-          <div className="w-8 h-8 rounded-full bg-[#f5f5f7] flex items-center justify-center text-[#1d1d1f]">
-            <Sparkles className="w-4 h-4 text-amber-600" />
-          </div>
+          <span className="text-xs font-semibold text-[#86868b] block">
+            03 / Standard
+          </span>
           <h3 className="text-sm font-semibold text-[#1d1d1f]">Lifetime Repair Focus</h3>
           <p className="text-xs text-[#86868b] leading-relaxed">
             Generous inner seam allowances and reinforced stitching allow garments to be tailored and repaired indefinitely.
@@ -173,10 +172,9 @@ export default function MaterialsPage() {
       <div className="mt-16 text-center">
         <Link
           href="/shop"
-          className="inline-flex items-center space-x-2 bg-[#1d1d1f] hover:bg-black text-white text-xs font-medium px-6 py-3 rounded-full transition-colors"
+          className="inline-flex items-center bg-[#1d1d1f] hover:bg-black text-white text-xs font-medium px-6 py-3 rounded-full transition-colors"
         >
-          <span>Explore garments made with these textiles</span>
-          <ArrowRight className="w-3.5 h-3.5" />
+          Explore garments made with these textiles
         </Link>
       </div>
     </div>

@@ -6,7 +6,6 @@ import { PRODUCTS } from "@/data/products";
 import { ProductCategory, GenderCategory } from "@/types";
 import { ProductCard } from "@/components/ProductCard";
 import { CapsuleMixer } from "@/components/CapsuleMixer";
-import { LayoutGrid, Grid2X2, RotateCcw, Sparkles } from "lucide-react";
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -93,37 +92,36 @@ function ShopContent() {
               </button>
               <button
                 onClick={() => setViewMode("mixer")}
-                className={`px-3 py-1 text-xs font-medium rounded-full transition-all flex items-center space-x-1.5 ${
+                className={`px-3 py-1 text-xs font-medium rounded-full transition-all ${
                   viewMode === "mixer"
                     ? "bg-white text-[#1d1d1f] shadow-xs"
                     : "text-[#86868b] hover:text-[#1d1d1f]"
                 }`}
               >
-                <Sparkles className="w-3 h-3 text-amber-500" />
-                <span>Silhouette Lab</span>
+                Silhouette Lab
               </button>
             </div>
 
-            {/* Grid Density Toggle (only active in grid mode) */}
+            {/* Clean Typographic Grid Density Toggle */}
             {viewMode === "grid" && (
-              <div className="hidden sm:flex items-center space-x-1 bg-[#f5f5f7] p-1 rounded-full border border-[#e5e5ea]">
+              <div className="hidden sm:flex items-center space-x-1 bg-[#f5f5f7] p-1 rounded-full border border-[#e5e5ea] text-xs font-medium">
                 <button
                   onClick={() => setGridColumns(2)}
-                  className={`p-1.5 rounded-full transition-all ${
+                  className={`w-7 h-6 rounded-full transition-all flex items-center justify-center ${
                     gridColumns === 2 ? "bg-white text-[#1d1d1f] shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                   }`}
-                  title="2-Column View"
+                  title="2 Columns"
                 >
-                  <Grid2X2 className="w-4 h-4" />
+                  2
                 </button>
                 <button
                   onClick={() => setGridColumns(4)}
-                  className={`p-1.5 rounded-full transition-all ${
+                  className={`w-7 h-6 rounded-full transition-all flex items-center justify-center ${
                     gridColumns === 4 ? "bg-white text-[#1d1d1f] shadow-xs" : "text-[#86868b] hover:text-[#1d1d1f]"
                   }`}
-                  title="4-Column View"
+                  title="4 Columns"
                 >
-                  <LayoutGrid className="w-4 h-4" />
+                  4
                 </button>
               </div>
             )}
@@ -146,7 +144,7 @@ function ShopContent() {
                   <button
                     key={g.value}
                     onClick={() => setGenderFilter(g.value)}
-                    className={`px-3 py-1 text-xs font-medium rounded-full transition-all ${
+                    className={`px-3.5 py-1 text-xs font-medium rounded-full transition-all ${
                       genderFilter === g.value
                         ? "bg-white text-[#1d1d1f] shadow-xs"
                         : "text-[#86868b] hover:text-[#1d1d1f]"
@@ -158,19 +156,18 @@ function ShopContent() {
               </div>
 
               {/* Sort Dropdown & Reset */}
-              <div className="flex items-center space-x-3 text-xs">
+              <div className="flex items-center space-x-4 text-xs">
                 {hasActiveFilters && (
                   <button
                     onClick={resetFilters}
-                    className="inline-flex items-center space-x-1 text-[#86868b] hover:text-[#1d1d1f] transition-colors"
+                    className="text-[#86868b] hover:text-[#1d1d1f] underline underline-offset-2 transition-colors"
                   >
-                    <RotateCcw className="w-3 h-3" />
-                    <span>Reset</span>
+                    Reset filters
                   </button>
                 )}
 
                 <div className="flex items-center space-x-2">
-                  <span className="text-[#86868b]">Sort by:</span>
+                  <span className="text-[#86868b]">Sort:</span>
                   <select
                     value={sortBy}
                     onChange={(e) =>
