@@ -1,27 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Syne } from "next/font/google";
+import { DM_Sans, DM_Mono } from "next/font/google";
 import { ClientLayout } from "@/components/ClientLayout";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const dmMono = DM_Mono({
+  variable: "--font-dm-mono",
   subsets: ["latin"],
-});
-
-const syne = Syne({
-  variable: "--font-syne",
-  subsets: ["latin"],
-  weight: ["500", "700", "800"],
+  weight: ["400", "500"],
 });
 
 export const metadata: Metadata = {
-  title: "BLINC — Concept Wardrobe 2026 | Modern Outfits",
-  description: "High-standard modern luxury fashion concept store. 2026 male and female architectural silhouettes, tailoring, and knitwear.",
+  title: "BLINC — Modern Wardrobe 2026",
+  description: "An independent modern luxury fashion atelier. 12 architectural silhouettes engineered for 2026 across female and male forms.",
 };
 
 export default function RootLayout({
@@ -32,9 +28,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${syne.variable} h-full antialiased`}
+      className={`${dmSans.variable} ${dmMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col font-sans bg-[#FBFBFA] text-[#121212]">
+      <body className="min-h-full flex flex-col font-sans bg-[#FAF9F5] text-[#141413] selection:bg-[#141413] selection:text-[#FAF9F5]">
         <ClientLayout>{children}</ClientLayout>
       </body>
     </html>
