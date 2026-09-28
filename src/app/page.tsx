@@ -18,27 +18,6 @@ export default function HomePage() {
       ? PRODUCTS
       : PRODUCTS.filter((p) => p.gender === activeGender);
 
-  const materials = [
-    {
-      title: "Italian virgin wool",
-      specs: "380 GSM · Biella, Italy",
-      description:
-        "Dense, structured wool tailored with natural crease-resistance for crisp, enduring silhouettes.",
-    },
-    {
-      title: "Sandwashed mulberry silk",
-      specs: "22 Momme · Como, Italy",
-      description:
-        "Treated with a specialized sand-wash technique for a velvet-soft matte texture and effortless fluid drape.",
-    },
-    {
-      title: "French nappa leather",
-      specs: "0.8mm Gauge · Millau, France",
-      description:
-        "Supple, vegetable-tanned calfskin that molds to the wearer over time with a quiet, natural patina.",
-    },
-  ];
-
   return (
     <div className="w-full bg-[#fbfbfd]">
       {/* 1. HERO SECTION */}
@@ -156,72 +135,6 @@ export default function HomePage() {
       {/* 2.5 CAPSULE MIXER & SILHOUETTE LAB */}
       <section id="capsule-mixer" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-[#e5e5ea]">
         <CapsuleMixer />
-      </section>
-
-      {/* 3. MATERIALS SECTION */}
-      <section id="materials" className="max-w-6xl mx-auto px-4 sm:px-6 py-16 border-t border-[#e5e5ea]">
-        <div className="mb-8">
-          <h2 className="text-2xl font-semibold tracking-tight text-[#1d1d1f]">
-            Material standards
-          </h2>
-          <p className="text-xs text-[#86868b] mt-0.5">
-            Responsibly sourced fabrics engineered for durability and tactile comfort.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {materials.map((m, idx) => (
-            <div
-              key={idx}
-              className="p-6 bg-[#f5f5f7] rounded-2xl border border-[#e5e5ea]/60 space-y-3"
-            >
-              <span className="text-[11px] font-medium text-[#86868b]">
-                {m.specs}
-              </span>
-              <h3 className="text-base font-semibold text-[#1d1d1f]">
-                {m.title}
-              </h3>
-              <p className="text-xs text-[#515154] leading-relaxed">
-                {m.description}
-              </p>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-8 text-center sm:text-left">
-          <Link
-            href="/materials"
-            className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
-          >
-            <span>Explore full textile certifications & mill provenance</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-      </section>
-
-      {/* 4. PHILOSOPHY SECTION */}
-      <section id="philosophy" className="max-w-6xl mx-auto px-4 sm:px-6 py-20 border-t border-[#e5e5ea]">
-        <div className="max-w-2xl">
-          <span className="text-xs font-medium text-[#86868b]">
-            Design philosophy
-          </span>
-          <h2 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mt-2 mb-4">
-            Reduction as a creative standard.
-          </h2>
-          <p className="text-sm text-[#515154] leading-relaxed mb-4">
-            Blinc is a 2026 concept store designed to push against unnecessary complexity. Instead of endless seasonal collections, we propose twelve versatile garments built to endure in quality and aesthetic relevance.
-          </p>
-          <p className="text-sm text-[#515154] leading-relaxed mb-6">
-            Every seam, silhouette, and fabric choice is guided by three principles: architectural proportion, tactile comfort, and circular longevity.
-          </p>
-          <Link
-            href="/philosophy"
-            className="inline-flex items-center space-x-1.5 text-xs font-medium text-[#1d1d1f] hover:text-[#0071e3] transition-colors"
-          >
-            <span>Read our four design pillars</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
       </section>
     </div>
   );
