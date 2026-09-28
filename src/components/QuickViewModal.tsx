@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/CartContext";
-import { X, ArrowRight, Check } from "lucide-react";
+import { X, Check } from "lucide-react";
 
 export function QuickViewModal() {
   const { quickViewProduct, closeQuickView, formatPrice, addItem } = useCart();
@@ -22,32 +22,32 @@ export function QuickViewModal() {
     setTimeout(() => {
       setAdded(false);
       closeQuickView();
-    }, 900);
+    }, 800);
   };
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6 lg:p-8">
+    <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 sm:p-6">
       {/* Backdrop */}
       <div
         onClick={closeQuickView}
-        className="fixed inset-0 bg-black/70 backdrop-blur-xs transition-opacity"
+        className="fixed inset-0 bg-black/40 backdrop-blur-xs transition-opacity"
       />
 
       {/* Modal Dialog */}
-      <div className="relative bg-[#FBFBFA] max-w-4xl w-full border border-neutral-300 shadow-2xl overflow-hidden z-10 my-8">
+      <div className="relative bg-white max-w-3xl w-full rounded-3xl border border-[#e5e5ea] shadow-2xl overflow-hidden z-10 my-8">
         {/* Close Button */}
         <button
           onClick={closeQuickView}
-          className="absolute top-4 right-4 z-20 p-2 bg-white/80 hover:bg-white text-neutral-900 border border-neutral-200 transition-colors"
+          className="absolute top-4 right-4 z-20 p-2 bg-[#f5f5f7] hover:bg-[#e5e5ea] text-[#1d1d1f] rounded-full transition-colors"
           aria-label="Close modal"
         >
-          <X className="w-5 h-5" />
+          <X className="w-4 h-4" />
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2">
           {/* Left: Gallery */}
-          <div className="relative bg-[#ECECE9] p-4 flex flex-col items-center justify-center border-b md:border-b-0 md:border-r border-neutral-200">
-            <div className="relative aspect-[3/4] w-full max-w-sm overflow-hidden bg-white shadow-inner">
+          <div className="relative bg-[#f5f5f7] p-6 flex flex-col items-center justify-center">
+            <div className="relative aspect-[3/4] w-full max-w-xs overflow-hidden rounded-2xl">
               <Image
                 src={quickViewProduct.images[selectedImageIndex] || quickViewProduct.images[0]}
                 alt={quickViewProduct.name}
@@ -56,17 +56,16 @@ export function QuickViewModal() {
               />
             </div>
 
-            {/* Thumbnail switcher if multiple images */}
             {quickViewProduct.images.length > 1 && (
-              <div className="flex space-x-2 mt-3">
+              <div className="flex space-x-2 mt-4">
                 {quickViewProduct.images.map((img, idx) => (
                   <button
                     key={idx}
                     onClick={() => setSelectedImageIndex(idx)}
-                    className={`relative w-12 h-14 border overflow-hidden transition-all ${
+                    className={`relative w-12 h-14 rounded-lg overflow-hidden transition-all ${
                       selectedImageIndex === idx
-                        ? "border-black ring-1 ring-black"
-                        : "border-neutral-300 opacity-60 hover:opacity-100"
+                        ? "ring-2 ring-[#1d1d1f]"
+                        : "opacity-60 hover:opacity-100"
                     }`}
                   >
                     <Image
@@ -81,77 +80,57 @@ export function QuickViewModal() {
             )}
           </div>
 
-          {/* Right: Details */}
+          {/* Right: Product Details */}
           <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6">
-            <div>
-              <div className="flex items-center justify-between text-xs font-mono text-neutral-400 uppercase tracking-widest mb-1">
-                <span>{quickViewProduct.edition}</span>
-                <span>{quickViewProduct.gender} · {quickViewProduct.category}</span>
+            <div className="space-y-3">
+              <div className="flex items-center space-x-2 text-xs text-[#86868b] capitalize">
+                <span>{quickViewProduct.gender}</span>
+                <span>·</span>
+                <span>{quickViewProduct.category}</span>
               </div>
 
-              <h2 className="font-display text-xl sm:text-2xl font-bold tracking-tight text-neutral-950 uppercase">
+              <h3 className="text-xl font-semibold text-[#1d1d1f]">
                 {quickViewProduct.name}
-              </h2>
+              </h3>
 
-              <p className="text-base font-mono font-bold text-neutral-900 mt-2">
+              <div className="text-lg font-medium text-[#1d1d1f]">
                 {formatPrice(quickViewProduct.price)}
-              </p>
+              </div>
 
-              <div className="w-full h-[1px] bg-neutral-200 my-4" />
-
-              <p className="text-xs text-neutral-600 leading-relaxed font-sans">
+              <p className="text-xs text-[#515154] leading-relaxed pt-1">
                 {quickViewProduct.description}
               </p>
+            </div>
 
-              {/* Stats pill */}
-              {quickViewProduct.stats && (
-                <div className="grid grid-cols-3 gap-2 mt-4 p-3 bg-neutral-100 border border-neutral-200/60 text-[10px] font-mono">
-                  <div>
-                    <span className="text-neutral-400 block uppercase">Weight</span>
-                    <span className="font-semibold text-neutral-800">{quickViewProduct.stats.weight}</span>
-                  </div>
-                  <div>
-                    <span className="text-neutral-400 block uppercase">Origin</span>
-                    <span className="font-semibold text-neutral-800">{quickViewProduct.stats.origin}</span>
-                  </div>
-                  <div>
-                    <span className="text-neutral-400 block uppercase">Cut</span>
-                    <span className="font-semibold text-neutral-800">{quickViewProduct.stats.silhouette}</span>
-                  </div>
-                </div>
-              )}
+            {/* Size Selector */}
+            <div className="space-y-3 pt-2">
+              <div className="flex justify-between items-center text-xs">
+                <span className="text-[#86868b]">Select Size</span>
+                <span className="text-[#1d1d1f] font-medium">{activeSize}</span>
+              </div>
 
-              {/* Size Selector */}
-              <div className="mt-6">
-                <div className="flex justify-between items-center text-xs font-mono mb-2">
-                  <span className="text-neutral-600 uppercase">Select Size:</span>
-                  <span className="text-neutral-400 underline cursor-pointer hover:text-black">
-                    Sizing Guide
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {quickViewProduct.sizes.map((sz) => (
-                    <button
-                      key={sz}
-                      onClick={() => setSelectedSize(sz)}
-                      className={`px-3.5 py-1.5 text-xs font-mono uppercase tracking-wider border transition-all ${
-                        activeSize === sz
-                          ? "bg-neutral-900 text-white border-neutral-900 font-bold"
-                          : "bg-white text-neutral-800 border-neutral-300 hover:border-black"
-                      }`}
-                    >
-                      {sz}
-                    </button>
-                  ))}
-                </div>
+              <div className="grid grid-cols-4 gap-2">
+                {quickViewProduct.sizes.map((sz) => (
+                  <button
+                    key={sz}
+                    onClick={() => setSelectedSize(sz)}
+                    className={`py-2 text-xs font-medium rounded-xl border transition-all ${
+                      activeSize === sz
+                        ? "bg-[#1d1d1f] text-white border-[#1d1d1f]"
+                        : "bg-white text-[#1d1d1f] border-[#e5e5ea] hover:border-[#1d1d1f]"
+                    }`}
+                  >
+                    {sz}
+                  </button>
+                ))}
               </div>
             </div>
 
             {/* Actions */}
-            <div className="space-y-3 pt-4 border-t border-neutral-200">
+            <div className="space-y-2 pt-2">
               <button
                 onClick={handleAddToCart}
-                className="w-full bg-neutral-900 hover:bg-black text-white py-3.5 px-6 text-xs font-mono uppercase tracking-widest font-semibold flex items-center justify-center space-x-2 transition-colors"
+                className="w-full bg-[#1d1d1f] hover:bg-black text-white py-3 rounded-full text-xs font-medium transition-colors flex items-center justify-center space-x-1.5"
               >
                 {added ? (
                   <>
@@ -159,19 +138,16 @@ export function QuickViewModal() {
                     <span>Added to Bag</span>
                   </>
                 ) : (
-                  <>
-                    <span>Add to Bag — {formatPrice(quickViewProduct.price)}</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </>
+                  <span>Add to Bag · {formatPrice(quickViewProduct.price)}</span>
                 )}
               </button>
 
               <Link
                 href={`/product/${quickViewProduct.slug}`}
                 onClick={closeQuickView}
-                className="w-full text-center block text-xs font-mono text-neutral-500 hover:text-neutral-900 uppercase tracking-wider py-1"
+                className="block text-center text-xs text-[#86868b] hover:text-[#1d1d1f] py-1 transition-colors"
               >
-                View Full Editorial Specifications →
+                View full garment specifications →
               </Link>
             </div>
           </div>
