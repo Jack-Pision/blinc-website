@@ -54,10 +54,11 @@ export default function PhilosophyPage() {
       {/* Editorial Photo Break */}
       <div className="relative aspect-[16/9] sm:aspect-[21/9] w-full rounded-3xl overflow-hidden bg-[#f5f5f7] mb-16 sm:mb-24 shadow-xs">
         <Image
-          src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85"
-          alt="Blinc Design Studio 2026"
+          src="/images/philosophy/design-studio.png"
+          alt="Blinc Design Studio 2026 — Brutalist travertine atelier and textile development space"
           fill
           priority
+          sizes="(max-width: 1200px) 100vw, 1200px"
           className="object-cover object-center"
         />
       </div>

@@ -88,6 +88,13 @@ async function run() {
     "/shop",
     "/materials",
     "/philosophy",
+    "/images/hero/hero-tailored.png",
+    "/images/hero/hero-knitwear.png",
+    "/images/materials/italian-virgin-wool.png",
+    "/images/materials/sandwashed-mulberry-silk.png",
+    "/images/materials/brushed-baby-mohair.png",
+    "/images/materials/french-full-grain-nappa.png",
+    "/images/philosophy/design-studio.png",
     ...catalog.map((p) => `/product/${p.slug}`),
     ...catalog.flatMap((p) => [
       `/images/products/${p.slug}/look-1.png`,

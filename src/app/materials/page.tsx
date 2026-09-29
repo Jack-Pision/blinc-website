@@ -16,8 +16,7 @@ const FABRICS = [
     certification: "Responsible Wool Standard (RWS)",
     description:
       "Spun from ultra-fine Merino fleeces in northern Italy, this 380 GSM wool features an engineered dense weave that resists creasing while draping with architectural structure. Naturally breathable with thermoregulating comfort across four seasons.",
-    image:
-      "https://images.unsplash.com/photo-1576995853123-5a10305d93c0?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/materials/italian-virgin-wool.png",
     garments: [
       "Deconstructed Oversized Wool Blazer",
       "Pleated Architectural Trousers",
@@ -31,8 +30,7 @@ const FABRICS = [
     certification: "OEKO-TEX® Standard 100",
     description:
       "Woven from Grade 6A pure mulberry silk and treated with a gentle water-and-sand wash process. This technique removes the shiny glare of traditional satin, leaving a soft powdered suede handfeel and fluid, cascading movement.",
-    image:
-      "https://images.unsplash.com/photo-1528459801416-a9e53bbf4e17?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/materials/sandwashed-mulberry-silk.png",
     garments: [
       "Asymmetric Draped Silk Blouse",
       "Sculptural Bias-Cut Silk Dress",
@@ -45,8 +43,7 @@ const FABRICS = [
     certification: "Sustainable Mohair Industry Standard",
     description:
       "Blended from the softest first shearings of South African angora goats and Peruvian baby alpaca, gently brushed with natural teasels for a cloud-like halo that traps body warmth with zero bulk.",
-    image:
-      "https://images.unsplash.com/photo-1434389677669-e08b4cac3105?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/materials/brushed-baby-mohair.png",
     garments: [
       "Ribbed Mohair Wrap Cardigan",
       "Gradient Brushed Mohair Jumper",
@@ -59,8 +56,7 @@ const FABRICS = [
     certification: "Leather Working Group (LWG) Gold Rated",
     description:
       "Sourced exclusively from European agricultural byproducts and tanned with mimosa and chestnut extracts. Exceptionally buttery and supple from day one, developing a personalized patina that enriches over decades of wear.",
-    image:
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=1200&q=85",
+    image: "/images/materials/french-full-grain-nappa.png",
     garments: [
       "Modular Leather Biker Jacket",
       "Technical Bonded Trench Coat",
@@ -95,8 +91,10 @@ export default function MaterialsPage() {
             <div className="lg:col-span-5 relative aspect-[4/3] rounded-2xl overflow-hidden bg-white shadow-xs">
               <Image
                 src={fabric.image}
-                alt={fabric.name}
+                alt={`${fabric.name} — ${fabric.spec} luxury textile specimen`}
                 fill
+                priority={idx === 0}
+                sizes="(max-width: 1024px) 100vw, 40vw"
                 className="object-cover"
               />
             </div>

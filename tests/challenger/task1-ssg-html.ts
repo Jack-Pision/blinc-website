@@ -79,8 +79,8 @@ async function run() {
     const hasErrorStrings = foundErrors.length > 0;
 
     // Check images in HTML or client bundle script
-    const imgMatches = content.match(/\/images\/products\/[a-z0-9-]+\/look-[12]\.png/g) || [];
-    const encodedImgMatches = content.match(/images%2Fproducts%2F[a-z0-9-]+%2Flook-[12]\.png/g) || [];
+    const imgMatches = content.match(/\/images\/(products\/[a-z0-9-]+\/look-[12]|hero\/hero-[a-z]+|materials\/[a-z0-9-]+|philosophy\/[a-z0-9-]+)\.png/g) || [];
+    const encodedImgMatches = content.match(/images%2F(products%2F[a-z0-9-]+%2Flook-[12]|hero%2Fhero-[a-z]+|materials%2F[a-z0-9-]+|philosophy%2F[a-z0-9-]+)\.png/g) || [];
     let allFoundImages = Array.from(new Set([...imgMatches, ...encodedImgMatches]));
 
     let hasExpectedProductTitle = true;
@@ -98,7 +98,18 @@ async function run() {
         hasExpectedImages = look1Present && look2Present;
       }
     } else if (relPath === "index.html") {
-      hasExpectedImages = allFoundImages.length > 0;
+      hasExpectedImages =
+        allFoundImages.length > 0 &&
+        (content.includes("hero-tailored.png") || content.includes(encodeURIComponent("hero-tailored.png"))) &&
+        (content.includes("hero-knitwear.png") || content.includes(encodeURIComponent("hero-knitwear.png")));
+    } else if (relPath === "materials.html") {
+      hasExpectedImages =
+        content.includes("italian-virgin-wool.png") &&
+        content.includes("sandwashed-mulberry-silk.png") &&
+        content.includes("brushed-baby-mohair.png") &&
+        content.includes("french-full-grain-nappa.png");
+    } else if (relPath === "philosophy.html") {
+      hasExpectedImages = content.includes("design-studio.png");
     } else if (relPath === "shop.html") {
       // In shop.html, useSearchParams causes client component bailout to suspense fallback.
       // We check both the fallback shell AND the referenced client JS script chunks.

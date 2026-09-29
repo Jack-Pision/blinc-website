@@ -5,6 +5,8 @@ import path from "node:path";
 import {
   EXPECTED_PRODUCTS,
   PRODUCTS_ASSET_DIR,
+  PUBLIC_DIR,
+  EXPECTED_SITE_IMAGES,
   MIN_IMAGE_SIZE_BYTES,
 } from "./helpers/test-utils.ts";
 import { inspectPngFile } from "./helpers/png-parser.ts";
@@ -155,4 +157,51 @@ describe("Tier 1: Feature Coverage (Asset Generation & Catalog Mapping)", () => 
       });
     });
   }
+
+  describe("Site Editorial & Material Asset Coverage (Mockup Replacements)", () => {
+    for (const siteImg of EXPECTED_SITE_IMAGES) {
+      it(`site asset ${siteImg.relPath} exists, >50KB, and has valid PNG header`, () => {
+        const fullPath = path.join(PUBLIC_DIR, siteImg.relPath);
+        assert.ok(fs.existsSync(fullPath), `Missing site asset: ${siteImg.relPath}`);
+
+        const stat = fs.statSync(fullPath);
+        assert.ok(
+          stat.size >= MIN_IMAGE_SIZE_BYTES,
+          `File ${siteImg.relPath} is under 50KB (${stat.size} bytes)`
+        );
+
+        const result = inspectPngFile(fullPath);
+        assert.ok(result.exists, `File does not exist: ${siteImg.relPath}`);
+        assert.ok(result.info.valid, `Invalid PNG structure in ${siteImg.relPath}: ${result.info.error}`);
+        assert.ok(result.info.width > 0, `Width must be > 0 in ${siteImg.relPath}`);
+        assert.ok(result.info.height > 0, `Height must be > 0 in ${siteImg.relPath}`);
+      });
+    }
+
+    it("homepage src/app/page.tsx references local hero-tailored.png and hero-knitwear.png", () => {
+      const pagePath = path.join(PUBLIC_DIR, "../src/app/page.tsx");
+      const content = fs.readFileSync(pagePath, "utf8");
+      assert.ok(content.includes("/images/hero/hero-tailored.png"), "Missing hero-tailored.png reference in page.tsx");
+      assert.ok(content.includes("/images/hero/hero-knitwear.png"), "Missing hero-knitwear.png reference in page.tsx");
+      assert.ok(!content.includes("images.unsplash.com"), "Found residual unsplash URL in page.tsx");
+    });
+
+    it("materials page src/app/materials/page.tsx references all 4 local material images", () => {
+      const pagePath = path.join(PUBLIC_DIR, "../src/app/materials/page.tsx");
+      const content = fs.readFileSync(pagePath, "utf8");
+      assert.ok(content.includes("/images/materials/italian-virgin-wool.png"));
+      assert.ok(content.includes("/images/materials/sandwashed-mulberry-silk.png"));
+      assert.ok(content.includes("/images/materials/brushed-baby-mohair.png"));
+      assert.ok(content.includes("/images/materials/french-full-grain-nappa.png"));
+      assert.ok(!content.includes("images.unsplash.com"), "Found residual unsplash URL in materials/page.tsx");
+    });
+
+    it("philosophy page src/app/philosophy/page.tsx references local design-studio.png", () => {
+      const pagePath = path.join(PUBLIC_DIR, "../src/app/philosophy/page.tsx");
+      const content = fs.readFileSync(pagePath, "utf8");
+      assert.ok(content.includes("/images/philosophy/design-studio.png"));
+      assert.ok(!content.includes("images.unsplash.com"), "Found residual unsplash URL in philosophy/page.tsx");
+    });
+  });
 });
+

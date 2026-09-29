@@ -10,6 +10,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://blinc.luxury"),
   title: "Blinc — Modern Outfits 2026",
   description: "Simple, timeless clothing engineered for modern living. Curated 12-piece wardrobe for women and men.",
 };

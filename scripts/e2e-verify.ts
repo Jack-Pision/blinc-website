@@ -23,7 +23,9 @@ import path from "node:path";
 import { execSync, spawn, ChildProcess } from "node:child_process";
 import {
   EXPECTED_PRODUCTS,
+  EXPECTED_SITE_IMAGES,
   PRODUCTS_ASSET_DIR,
+  PUBLIC_DIR,
   PROJECT_ROOT,
   MIN_IMAGE_SIZE_BYTES,
   TARGET_ASPECT_RATIO,
@@ -152,6 +154,59 @@ async function runTier1() {
       !catItem ? "Not in catalog" : `Found: ${JSON.stringify(catItem.images)}`
     );
   }
+
+  // Site Editorial & Material Asset Verification (Hero, Materials, Philosophy)
+  for (const siteImg of EXPECTED_SITE_IMAGES) {
+    const fullPath = path.join(PUBLIC_DIR, siteImg.relPath);
+    const exists = fs.existsSync(fullPath);
+    const size = exists ? fs.statSync(fullPath).size : 0;
+    recordTest(
+      1,
+      `[SITE-ASSET] ${siteImg.relPath} exists & >50KB (${siteImg.description})`,
+      exists && size >= MIN_IMAGE_SIZE_BYTES,
+      !exists ? "File not found" : `Size: ${(size / 1024).toFixed(1)} KB`
+    );
+
+    const info = inspectPngFile(fullPath);
+    recordTest(
+      1,
+      `[SITE-ASSET] ${siteImg.relPath} valid readable PNG header`,
+      info.exists && info.info.valid,
+      info.info.error
+    );
+  }
+
+  // Page Codebase References
+  const pagePath = path.join(PROJECT_ROOT, "src", "app", "page.tsx");
+  const pageSrc = fs.readFileSync(pagePath, "utf8");
+  recordTest(
+    1,
+    `[UI-PAGE] src/app/page.tsx references hero-tailored.png and hero-knitwear.png with zero Unsplash`,
+    pageSrc.includes("/images/hero/hero-tailored.png") &&
+      pageSrc.includes("/images/hero/hero-knitwear.png") &&
+      !pageSrc.includes("images.unsplash.com")
+  );
+
+  const matPath = path.join(PROJECT_ROOT, "src", "app", "materials", "page.tsx");
+  const matSrc = fs.readFileSync(matPath, "utf8");
+  recordTest(
+    1,
+    `[UI-PAGE] src/app/materials/page.tsx references all 4 material swatches with zero Unsplash`,
+    matSrc.includes("/images/materials/italian-virgin-wool.png") &&
+      matSrc.includes("/images/materials/sandwashed-mulberry-silk.png") &&
+      matSrc.includes("/images/materials/brushed-baby-mohair.png") &&
+      matSrc.includes("/images/materials/french-full-grain-nappa.png") &&
+      !matSrc.includes("images.unsplash.com")
+  );
+
+  const philPath = path.join(PROJECT_ROOT, "src", "app", "philosophy", "page.tsx");
+  const philSrc = fs.readFileSync(philPath, "utf8");
+  recordTest(
+    1,
+    `[UI-PAGE] src/app/philosophy/page.tsx references design-studio.png with zero Unsplash`,
+    philSrc.includes("/images/philosophy/design-studio.png") &&
+      !philSrc.includes("images.unsplash.com")
+  );
 }
 
 // ============================================================================
@@ -225,6 +280,32 @@ async function runTier2() {
     noTraversal = false;
   }
   recordTest(2, "Catalog image URLs contain no path traversal (..) or invalid separators", noTraversal);
+
+  // Site Editorial Images Aspect Ratios & Binary Signatures
+  for (const siteImg of EXPECTED_SITE_IMAGES) {
+    const fullPath = path.join(PUBLIC_DIR, siteImg.relPath);
+    const { exists, info } = inspectPngFile(fullPath);
+
+    const ratioPassed = exists && info.valid && Math.abs(info.aspectRatio - siteImg.expectedRatio) <= siteImg.tolerance;
+    recordTest(
+      2,
+      `[SITE-RATIO] ${siteImg.relPath} matches expected ratio ${siteImg.expectedRatio.toFixed(3)} (${info.width}x${info.height})`,
+      ratioPassed,
+      !exists ? "Missing file" : `Ratio: ${info.aspectRatio.toFixed(3)} (expected: ${siteImg.expectedRatio.toFixed(3)})`
+    );
+
+    let magicOk = false;
+    if (exists) {
+      const buf = fs.readFileSync(fullPath);
+      magicOk = buf.length >= 8 && buf.subarray(0, 8).equals(PNG_MAGIC);
+    }
+    recordTest(
+      2,
+      `[SITE-MAGIC] ${siteImg.relPath} PNG magic signature & IEND trailer`,
+      magicOk && Boolean(info.hasIend),
+      !magicOk ? "Bad magic signature" : !info.hasIend ? "Missing IEND chunk" : undefined
+    );
+  }
 }
 
 // ============================================================================
@@ -375,6 +456,12 @@ async function runTier4() {
         const shopRes = await fetch(`${BASE_URL}/shop`);
         recordTest(4, "HTTP Route: GET /shop returns 200 OK with catalog", shopRes.status === 200);
 
+        const matRes = await fetch(`${BASE_URL}/materials`);
+        recordTest(4, "HTTP Route: GET /materials returns 200 OK with textile library", matRes.status === 200);
+
+        const philRes = await fetch(`${BASE_URL}/philosophy`);
+        recordTest(4, "HTTP Route: GET /philosophy returns 200 OK with design ethos", philRes.status === 200);
+
         // Test all 12 product routes
         let allProducts200 = true;
         for (const spec of EXPECTED_PRODUCTS) {
@@ -391,6 +478,13 @@ async function runTier4() {
           if (res1.status !== 200 || res2.status !== 200) allAssets200 = false;
         }
         recordTest(4, "HTTP Assets: All 24 look-1.png and look-2.png served with HTTP 200", allAssets200);
+
+        let allSiteAssets200 = true;
+        for (const siteImg of EXPECTED_SITE_IMAGES) {
+          const res = await fetch(`${BASE_URL}/${siteImg.relPath}`);
+          if (res.status !== 200) allSiteAssets200 = false;
+        }
+        recordTest(4, "HTTP Assets: All 7 site editorial & material images served with HTTP 200", allSiteAssets200);
       }
     } catch (e: unknown) {
       recordTest(4, "Dev/Prod Server Runtime Execution", false, String(e));

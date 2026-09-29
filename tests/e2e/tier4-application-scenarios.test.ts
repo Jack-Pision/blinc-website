@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawn, execSync, ChildProcess } from "node:child_process";
 import {
   EXPECTED_PRODUCTS,
+  EXPECTED_SITE_IMAGES,
   PROJECT_ROOT,
 } from "./helpers/test-utils.ts";
 
@@ -180,5 +181,37 @@ describe("Tier 4: Real-World Application Scenarios (Build Pipeline & Runtime Del
         }
       }
     });
+
+    it("serves the Materials & Craft page (/materials) with HTTP 200 and valid HTML", async () => {
+      const res = await fetch(`${BASE_URL}/materials`);
+      assert.strictEqual(res.status, 200, `/materials returned HTTP ${res.status}`);
+      const text = await res.text();
+      assert.ok(text.includes("Materials"), "/materials missing materials text");
+    });
+
+    it("serves the Philosophy page (/philosophy) with HTTP 200 and valid HTML", async () => {
+      const res = await fetch(`${BASE_URL}/philosophy`);
+      assert.strictEqual(res.status, 200, `/philosophy returned HTTP ${res.status}`);
+      const text = await res.text();
+      assert.ok(text.includes("Philosophy"), "/philosophy missing philosophy text");
+    });
+
+    it("serves all 7 site editorial & material image assets with HTTP 200 and image/png Content-Type", async () => {
+      for (const siteImg of EXPECTED_SITE_IMAGES) {
+        const url = `${BASE_URL}/${siteImg.relPath}`;
+        const res = await fetch(url);
+        assert.strictEqual(
+          res.status,
+          200,
+          `Site asset route ${url} returned HTTP ${res.status}`
+        );
+        const contentType = res.headers.get("content-type");
+        assert.ok(
+          contentType && (contentType.includes("image/png") || contentType.includes("image/")),
+          `Expected image Content-Type for ${url}, got ${contentType}`
+        );
+      }
+    });
   });
 });
+

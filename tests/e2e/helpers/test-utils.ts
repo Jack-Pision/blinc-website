@@ -116,3 +116,56 @@ export const EXPECTED_PRODUCTS: ExpectedProductSpec[] = [
 export const MIN_IMAGE_SIZE_BYTES = 50 * 1024; // 50 KB = 51,200 bytes (or 50,000 bytes)
 export const TARGET_ASPECT_RATIO = 3 / 4; // 0.75
 export const ASPECT_RATIO_TOLERANCE = 0.05; // 0.70 to 0.80 acceptable editorial 3:4 tolerance
+
+export interface SiteImageSpec {
+  relPath: string;
+  expectedRatio: number; // width / height
+  tolerance: number;
+  description: string;
+}
+
+export const EXPECTED_SITE_IMAGES: SiteImageSpec[] = [
+  {
+    relPath: "images/hero/hero-tailored.png",
+    expectedRatio: 3 / 4,
+    tolerance: 0.05,
+    description: "Homepage Hero Tailored Silhouette",
+  },
+  {
+    relPath: "images/hero/hero-knitwear.png",
+    expectedRatio: 3 / 4,
+    tolerance: 0.05,
+    description: "Homepage Hero Knitwear Silhouette",
+  },
+  {
+    relPath: "images/materials/italian-virgin-wool.png",
+    expectedRatio: 4 / 3,
+    tolerance: 0.05,
+    description: "Materials Italian Virgin Wool Swatch",
+  },
+  {
+    relPath: "images/materials/sandwashed-mulberry-silk.png",
+    expectedRatio: 4 / 3,
+    tolerance: 0.05,
+    description: "Materials Sandwashed Mulberry Silk Swatch",
+  },
+  {
+    relPath: "images/materials/brushed-baby-mohair.png",
+    expectedRatio: 4 / 3,
+    tolerance: 0.05,
+    description: "Materials Brushed Baby Mohair Swatch",
+  },
+  {
+    relPath: "images/materials/french-full-grain-nappa.png",
+    expectedRatio: 4 / 3,
+    tolerance: 0.05,
+    description: "Materials French Full-Grain Nappa Swatch",
+  },
+  {
+    relPath: "images/philosophy/design-studio.png",
+    expectedRatio: 16 / 9,
+    tolerance: 0.05,
+    description: "Philosophy Atelier Design Studio",
+  },
+];
+

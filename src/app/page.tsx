@@ -56,19 +56,21 @@ export default function HomePage() {
         <div className="mt-12 sm:mt-16 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#f5f5f7]">
             <Image
-              src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=85"
-              alt="Blinc Tailored Silhouette 2026"
+              src="/images/hero/hero-tailored.png"
+              alt="Blinc Tailored Silhouette 2026 — Deconstructed Wool Blazer with Pleated Architectural Trousers"
               fill
               priority
+              sizes="(max-width: 640px) 100vw, 50vw"
               className="object-cover object-top"
             />
           </div>
           <div className="relative aspect-[4/5] rounded-3xl overflow-hidden bg-[#f5f5f7]">
             <Image
-              src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1200&q=85"
-              alt="Blinc Knitwear Silhouette 2026"
+              src="/images/hero/hero-knitwear.png"
+              alt="Blinc Knitwear Silhouette 2026 — Boxy Brushed Mohair Cardigan with Fluid Studio Trousers"
               fill
               priority
+              sizes="(max-width: 640px) 100vw, 50vw"
               className="object-cover object-top"
             />
           </div>

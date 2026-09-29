@@ -6,6 +6,7 @@ import {
   EXPECTED_PRODUCTS,
   PRODUCTS_ASSET_DIR,
   PUBLIC_DIR,
+  EXPECTED_SITE_IMAGES,
   TARGET_ASPECT_RATIO,
   ASPECT_RATIO_TOLERANCE,
 } from "./helpers/test-utils.ts";
@@ -189,5 +190,46 @@ describe("Tier 2: Boundary & Corner Cases (Asset Integrity & Format Verification
         }
       }
     });
+
+    it("all site editorial & material image paths prevent path traversal outside public root", () => {
+      for (const siteImg of EXPECTED_SITE_IMAGES) {
+        assert.ok(!siteImg.relPath.includes(".."), `Site image "${siteImg.relPath}" contains ".."`);
+        assert.ok(!siteImg.relPath.includes("\\"), `Site image "${siteImg.relPath}" contains backslash`);
+        const diskPath = path.resolve(PUBLIC_DIR, siteImg.relPath);
+        assert.ok(
+          diskPath.startsWith(PUBLIC_DIR),
+          `Resolved path "${diskPath}" escapes public root "${PUBLIC_DIR}"`
+        );
+      }
+    });
+  });
+
+  describe("Site Editorial Image Aspect Ratios & Binary Byte Integrity", () => {
+    for (const siteImg of EXPECTED_SITE_IMAGES) {
+      it(`${siteImg.relPath} matches expected aspect ratio (${siteImg.expectedRatio.toFixed(3)} ± ${siteImg.tolerance})`, () => {
+        const fullPath = path.join(PUBLIC_DIR, siteImg.relPath);
+        const { exists, info } = inspectPngFile(fullPath);
+        assert.ok(exists, `Missing file: ${siteImg.relPath}`);
+        assert.ok(info.valid, `Invalid PNG: ${info.error}`);
+
+        const ratioDiff = Math.abs(info.aspectRatio - siteImg.expectedRatio);
+        assert.ok(
+          ratioDiff <= siteImg.tolerance,
+          `Aspect ratio ${info.aspectRatio.toFixed(3)} deviates from expected ${siteImg.expectedRatio.toFixed(3)} by ${ratioDiff.toFixed(3)}`
+        );
+      });
+
+      it(`${siteImg.relPath} has valid PNG magic bytes and IEND trailer chunk`, () => {
+        const fullPath = path.join(PUBLIC_DIR, siteImg.relPath);
+        const { exists, info } = inspectPngFile(fullPath);
+        assert.ok(exists, `Missing file: ${siteImg.relPath}`);
+        assert.ok(info.valid, `PNG invalid: ${info.error}`);
+        assert.ok(info.hasIend, `Missing IEND chunk in ${siteImg.relPath}`);
+
+        const buf = fs.readFileSync(fullPath);
+        assert.ok(buf.length >= 8 && buf.subarray(0, 8).equals(PNG_MAGIC), `Invalid PNG magic signature in ${siteImg.relPath}`);
+      });
+    }
   });
 });
+
