@@ -103,7 +103,6 @@ async function run() {
       // In shop.html, useSearchParams causes client component bailout to suspense fallback.
       // We check both the fallback shell AND the referenced client JS script chunks.
       const scriptMatches = content.match(/\/static\/chunks\/[a-z0-9_-]+\.js/g) || [];
-      let foundInChunks = 0;
       for (const sm of scriptMatches) {
         const chunkFileName = path.basename(sm);
         const chunkPath = path.join(STATIC_CHUNKS_DIR, chunkFileName);
@@ -112,7 +111,6 @@ async function run() {
           const matches = chunkCode.match(/\/images\/products\/[a-z0-9-]+\/look-[12]\.png/g) || [];
           if (matches.length > 0) {
             allFoundImages = Array.from(new Set([...allFoundImages, ...matches]));
-            foundInChunks += matches.length;
           }
         }
       }

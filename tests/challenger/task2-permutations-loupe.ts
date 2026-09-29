@@ -167,7 +167,7 @@ async function run() {
   // Inspect all 24 image assets
   let loupeFailures = 0;
   for (const prod of catalog) {
-    for (const [idx, imgRel] of prod.images.entries()) {
+    for (const imgRel of prod.images) {
       const fullPath = path.join(PUBLIC_DIR, imgRel.replace(/^\//, ""));
       if (!fs.existsSync(fullPath)) {
         console.error(`❌ Image file missing: ${fullPath}`);
