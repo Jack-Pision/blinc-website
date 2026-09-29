@@ -2,6 +2,7 @@
 
 import React, { createContext, useContext, useState, useMemo, useSyncExternalStore } from "react";
 import { Product, CartItem, Currency } from "@/types";
+import { PRODUCTS } from "@/data/products";
 
 interface CartContextType {
   items: CartItem[];
@@ -159,6 +160,25 @@ function saveCurrencyToStorage(c: Currency) {
   notifyCurrencyChange();
 }
 
+function migrateCartItem(item: CartItem): CartItem {
+  if (!item || !item.product) return item;
+  const catalogProduct = PRODUCTS.find(
+    (p) => p.id === item.product.id || p.slug === item.product.slug
+  );
+  if (catalogProduct) {
+    return {
+      ...item,
+      product: {
+        ...catalogProduct,
+        ...item.product,
+        // Always ensure images points to the latest local photography assets
+        images: catalogProduct.images,
+      },
+    };
+  }
+  return item;
+}
+
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
@@ -179,7 +199,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   const items = useMemo<CartItem[]>(() => {
     try {
       const parsed = JSON.parse(cartJson);
-      return Array.isArray(parsed) ? parsed : [];
+      if (!Array.isArray(parsed)) return [];
+      return parsed.map(migrateCartItem);
     } catch {
       return [];
     }

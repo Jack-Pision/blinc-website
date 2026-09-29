@@ -100,9 +100,13 @@ export function CartDrawer() {
                 >
                   <div className="relative w-20 h-24 bg-[#f5f5f7] rounded-xl flex-shrink-0 overflow-hidden">
                     <Image
-                      src={item.product.images[0]}
-                      alt={item.product.name}
+                      src={
+                        item.product?.images?.[0] ||
+                        "/images/products/deconstructed-oversized-wool-blazer/look-1.png"
+                      }
+                      alt={item.product?.name || "Cart item"}
                       fill
+                      sizes="80px"
                       className="object-cover object-top"
                     />
                   </div>
