@@ -113,7 +113,7 @@ The site concludes with an architectural signature footer containing secondary n
 
 - Framework: Next.js 16.3.6 (App Router) with Turbopack compilation engine.
 - UI Library: React 19 with Concurrent Features and Server Components.
-- Styling: Tailwind CSS v4 with custom CSS custom properties and modern scrollbars.
+- Styling: Tailwind CSS v4 with custom CSS custom properties and invisible functional scrollbars.
 - Image Pipeline: Next.js `<Image>` component configured for AVIF and WebP delivery with responsive sizing rules.
 - State Architecture: Cart state managed via `CartContext.tsx` utilizing `useSyncExternalStore` and migration adapters (`migrateCartItem`) to prevent client/server hydration divergence across browser sessions.
 - Static Generation: Full Static Site Generation (SSG) for all product dynamic routes via `generateStaticParams`.
@@ -147,7 +147,7 @@ Blinc/
 │   └── capture_docs_screenshots.py           # Automated headless documentation capture
 ├── src/
 │   ├── app/
-│   │   ├── globals.css                       # Design tokens and custom modern scrollbar
+│   │   ├── globals.css                       # Design tokens and invisible functional scrollbar
 │   │   ├── layout.tsx                        # Root layout with metadata and providers
 │   │   ├── page.tsx                          # Editorial Flagship homepage
 │   │   ├── materials/page.tsx                # Textile specifications archive

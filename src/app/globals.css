@@ -18,8 +18,8 @@
 
 html {
   scroll-behavior: smooth;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(29, 29, 31, 0.25) transparent;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 body {
@@ -29,45 +29,32 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
-/* Modern Minimalist Luxury Scrollbar (Chromium, Safari, Edge, Opera) */
+/* Globally invisible scrollbars with full scroll functionality */
+* {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+*::-webkit-scrollbar,
 ::-webkit-scrollbar {
-  width: 7px;
-  height: 7px;
-}
-
-::-webkit-scrollbar-track {
+  display: none;
+  width: 0px;
+  height: 0px;
   background: transparent;
 }
 
-::-webkit-scrollbar-thumb {
-  background: rgba(29, 29, 31, 0.22);
-  border-radius: 9999px;
-  border: 1px solid transparent;
-  background-clip: padding-box;
-  transition: background-color 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(29, 29, 31, 0.45);
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-thumb:active {
-  background: rgba(29, 29, 31, 0.7);
-  background-clip: padding-box;
-}
-
-::-webkit-scrollbar-corner {
-  background: transparent;
-}
-
-/* Hide scrollbar for clean horizontal scrollers */
+/* Hide scrollbar utility class */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
+  width: 0px;
+  height: 0px;
 }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
